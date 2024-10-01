@@ -56,8 +56,6 @@ const CadastrarUsuario = () => {
     setLoading(true);
     values.telefone = values.telefone.replace(/[^0-9]/g, "");
 
-    console.log(values);
-
     UsuarioService.salvarUsuario2(values)
       .then((resp: any) => {
         if (resp.id) {

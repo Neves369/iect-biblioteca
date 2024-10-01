@@ -18,6 +18,22 @@ const listarLivros = async () => {
     }
 }
 
+const listarLivrosDisponiveis = async () => {
+    try {
+        
+        const { data, error } = await supabase
+        .from('livros_disponiveis')
+        .select("*");      
+
+        if (error) {
+            return error.message;
+        }
+        return data;
+    } catch (error) {
+        return exceptionHandler(error);
+    }
+}
+
 const salvarLivro = async (livro: any) => {
     try {
         const { error, status } = await supabase
@@ -67,5 +83,7 @@ const editarLivro = async (livro: any, id: any) => {
 export default {
     salvarLivro,
     editarLivro,
-    listarLivros
+    listarLivros,
+    listarLivrosDisponiveis
+
 }

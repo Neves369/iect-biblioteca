@@ -14,6 +14,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import UsuarioService from "../../services/UsuarioService";
+import { formatTel } from "../../utils/FormatarTelefone";
 
 const Cadastro: React.FC = () => {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ const Cadastro: React.FC = () => {
   const [submitting, setSubmitting] = useState(false);
   const {
     register,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm();
@@ -38,6 +40,14 @@ const Cadastro: React.FC = () => {
       .finally(() => {
         setSubmitting(false);
       });
+  };
+
+  const maskTel = (event: any) => {
+    const { name, value } = event.target;
+    if (value) {
+      const maskedValue = formatTel(value);
+      setValue(name, maskedValue);
+    }
   };
 
   return (
@@ -94,6 +104,7 @@ const Cadastro: React.FC = () => {
             {...register("telefone", {
               required: true,
             })}
+            onBlur={maskTel}
           />
 
           <TextField

@@ -31,6 +31,7 @@ import { CheckCircle, Close } from "@mui/icons-material";
 import CustomToolbar from "../../components/CustomMui/CustomToolbar";
 import EmprestimoService from "../../services/EmprestimoService";
 import { useForm } from "react-hook-form";
+import moment from "moment";
 
 const Emprestimos = () => {
   const { register, handleSubmit } = useForm();
@@ -61,12 +62,18 @@ const Emprestimos = () => {
       headerName: "Data Empréstimo",
       flex: 1,
       cellClassName: "emprestimo-column--cell",
+      valueFormatter: (params: any) => {
+        return moment(params.value).format("DD/MM/YYYY");
+      },
     },
     {
       field: "data_devolucao",
       headerName: "Data Devolução",
       flex: 1,
       cellClassName: "devolucao-column--cell",
+      valueFormatter: (params: any) => {
+        return moment(params.value).format("DD/MM/YYYY");
+      },
     },
     {
       field: "finalizar",
@@ -119,7 +126,7 @@ const Emprestimos = () => {
         aria-label="add an alarm"
         onClick={handleEditClick}
       >
-        {index.data_devolucao !== null ? (
+        {index.data_devolucao === null ? (
           <Close color="error" />
         ) : (
           <CheckCircle color="success" />
