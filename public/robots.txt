@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://https://iect-biblioteca.vercel.app/sitemap.xml
