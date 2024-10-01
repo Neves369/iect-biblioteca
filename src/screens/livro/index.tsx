@@ -220,8 +220,8 @@ const Livros = () => {
                   fullWidth
                   variant="filled"
                   type="text"
-                  label="Nome"
-                  {...register("nome", {
+                  label="Título"
+                  {...register("titulo", {
                     required: false,
                   })}
                   sx={{ gridColumn: "span 2" }}
@@ -232,8 +232,8 @@ const Livros = () => {
                   fullWidth
                   variant="filled"
                   type="text"
-                  label="Categoria"
-                  {...register("categoria", {
+                  label="Autor"
+                  {...register("autor", {
                     required: false,
                   })}
                   sx={{ gridColumn: "span 2" }}
@@ -244,20 +244,8 @@ const Livros = () => {
                   fullWidth
                   variant="filled"
                   type="text"
-                  label="Código Interno"
-                  {...register("codigo_interno", {
-                    required: false,
-                  })}
-                  sx={{ gridColumn: "span 2" }}
-                />
-                {isNonMobile && <div style={{ gridColumn: "span 2" }}></div>}
-
-                <TextField
-                  fullWidth
-                  variant="filled"
-                  type="text"
-                  label="Código Externo"
-                  {...register("codigo_externo", {
+                  label="Ano de Publicação"
+                  {...register("ano_publicacao", {
                     required: false,
                   })}
                   sx={{ gridColumn: "span 2" }}
