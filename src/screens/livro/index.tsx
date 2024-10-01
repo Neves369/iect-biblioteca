@@ -77,7 +77,7 @@ const Livros = () => {
   ];
 
   // Pesquisar Produtos
-  const pesquisar = (values: any) => {
+  const pesquisar = () => {
     setLoading(true);
 
     LivroService.listarLivros()
