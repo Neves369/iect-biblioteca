@@ -4,8 +4,9 @@ import AuthContext from "../../context/auth";
 import calendar from "../../assets/calendar.webp";
 import bkWelcome from "../../assets/bkWelcome.webp";
 import { checkDevice } from "../../utils/checkDevice";
-import { Avatar, Box, Typography } from "@mui/material";
+import { Avatar, Box, Button, Typography } from "@mui/material";
 import YouTubeEmbed from "../../components/video/apresentacao";
+import { DownloadOutlined } from "@mui/icons-material";
 
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
@@ -14,8 +15,27 @@ const Dashboard = () => {
   return (
     <Box m="20px">
       {/* Header */}
-      <Box display="flex" justifyContent="space-between" alignItems="center">
+      <Box
+        display="flex"
+        mb={1}
+        justifyContent="space-between"
+        alignItems="center"
+      >
         <Header />
+        <Box>
+          <Button
+            sx={{
+              backgroundColor: "black",
+              color: "white",
+              fontSize: "14px",
+              fontWeight: "bold",
+              padding: "10px 10px",
+            }}
+          >
+            <DownloadOutlined sx={{ mr: "10px" }} />
+            Baixar plano de leitura
+          </Button>
+        </Box>
       </Box>
       {/*  */}
 
