@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 const Topbar = () => {
   const navigate = useNavigate();
-  const { user } = useContext(AuthContext);
+  const { user, signOutClearAll } = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -97,6 +97,14 @@ const Topbar = () => {
                 Usuários
               </MenuItem>
             )}
+
+            <MenuItem
+              onClick={() => {
+                signOutClearAll(), handleClose();
+              }}
+            >
+              Sair
+            </MenuItem>
           </Menu>
         </IconButton>
       </Box>
