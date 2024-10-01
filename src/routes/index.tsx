@@ -22,7 +22,7 @@ function RoutesController() {
 
   const Private = ({ item }: any) => {
     if (!signed || user.tipoUsuario !== "master") {
-      return <Navigate to="/" replace />; // Redireciona para a página de login
+      return <Navigate to="/" replace />;
     }
 
     return item;
