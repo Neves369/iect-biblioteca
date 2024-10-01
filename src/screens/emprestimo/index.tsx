@@ -314,6 +314,15 @@ const Emprestimos = () => {
           localeText={localizedTextsMap}
           slots={isNonMobile ? { toolbar: () => CustomToolbar(columns) } : {}}
           loading={loading}
+          initialState={{
+            columns: {
+              columnVisibilityModel: {
+                id: isNonMobile,
+                data_emprestimo: isNonMobile,
+                data_devolucao: isNonMobile,
+              },
+            },
+          }}
         />
       </Box>
       {/*  */}

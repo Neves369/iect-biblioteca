@@ -283,8 +283,8 @@ const Livros = () => {
             columns: {
               columnVisibilityModel: {
                 id: isNonMobile,
-                categoria: isNonMobile,
-                editar: isNonMobile && user.tipoUsuario == "master",
+                ano_publicacao: isNonMobile,
+                editar: user.tipoUsuario == "master",
                 ativar_inativar: isNonMobile && user.tipoUsuario == "master",
               },
             },

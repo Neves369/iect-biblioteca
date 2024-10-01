@@ -24,6 +24,8 @@ const Dashboard = () => {
         <Header />
         <Box>
           <Button
+            target="_blank"
+            href="https://drive.google.com/drive/folders/1_NMSoSDtOovaEMkGQTrjiIIN4G3It2qQ?usp=sharing"
             sx={{
               backgroundColor: "black",
               color: "white",
@@ -33,7 +35,7 @@ const Dashboard = () => {
             }}
           >
             <DownloadOutlined sx={{ mr: "10px" }} />
-            Baixar plano de leitura
+            Drive de Leitura
           </Button>
         </Box>
       </Box>
@@ -106,8 +108,8 @@ const Dashboard = () => {
         </Box>
 
         <Box
-          sx={{ display: { xs: checkDevice() === true ? "none" : "block" } }}
-          gridColumn="span 4"
+          sx={{ display: { xs: "block" } }}
+          gridColumn={checkDevice() === true ? "span 12" : "span 4"}
           gridRow="span 2"
           overflow="hide"
         >

@@ -72,13 +72,6 @@ const Topbar = () => {
             >
               Dashboard
             </MenuItem>
-            <MenuItem
-              onClick={() => {
-                navigate("/livros"), handleClose();
-              }}
-            >
-              Livros
-            </MenuItem>
             {user.tipoUsuario == "master" && (
               <MenuItem
                 onClick={() => {
@@ -88,6 +81,13 @@ const Topbar = () => {
                 Emprestimos
               </MenuItem>
             )}
+            <MenuItem
+              onClick={() => {
+                navigate("/livros"), handleClose();
+              }}
+            >
+              Livros
+            </MenuItem>
             {user.tipoUsuario == "master" && (
               <MenuItem
                 onClick={() => {

@@ -350,7 +350,7 @@ const Usuarios = () => {
               columnVisibilityModel: {
                 id: isNonMobile,
                 documento: isNonMobile,
-                tipoUsuario: isNonMobile,
+                tipo_usuario: isNonMobile,
                 visualizar: isNonMobile,
                 ativar_inativar: isNonMobile,
               },
