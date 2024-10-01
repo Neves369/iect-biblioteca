@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
 import logo from "../../assets/logocg.webp";
-import AuthContext from "../../context/auth";
-import { useNavigate } from "react-router-dom";
+// import AuthContext from "../../context/auth";
+// import { useNavigate } from "react-router-dom";
 import background from "../../assets/fundo.webp";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Card,
@@ -16,8 +16,8 @@ import {
 import UsuarioService from "../../services/UsuarioService";
 
 const Cadastro: React.FC = () => {
-  const navigate = useNavigate();
-  const { signIn } = useContext(AuthContext);
+  // const navigate = useNavigate();
+  // const { signIn } = useContext(AuthContext);
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [submitting, setSubmitting] = useState(false);
   const {

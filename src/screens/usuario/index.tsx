@@ -38,7 +38,7 @@ const Usuarios = () => {
   const [userAction, setUserAction] = useState("");
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [showDialogConfirm, setShowDialogConfirm] = useState(false);
-  const [usuarioSelecionado, setUsuarioSelecionado] = useState<any>();
+  // const [usuarioSelecionado, setUsuarioSelecionado] = useState<any>();
   const { register, handleSubmit } = useForm();
 
   // salva os fitros da última pesquisa par serem usados ao atualizar lista
@@ -143,11 +143,11 @@ const Usuarios = () => {
       if (index.status === true) {
         setUserAction("Inativar");
         setShowDialogConfirm(true);
-        setUsuarioSelecionado(index);
+        // setUsuarioSelecionado(index);
       } else {
         setUserAction("Ativar");
         setShowDialogConfirm(true);
-        setUsuarioSelecionado(index);
+        // setUsuarioSelecionado(index);
       }
     };
 
