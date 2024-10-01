@@ -124,7 +124,12 @@ const Login: React.FC = () => {
               "Login"
             )}
           </Button>
-          <a className="linkLogin" href="/cadastrar">
+          <a
+            className="linkLogin"
+            onClick={() => {
+              navigate("/cadastrar");
+            }}
+          >
             Cadastrar-se
           </a>
         </Card>
