@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import Dashboard from "../screens/dashboard";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { CssBaseline, ThemeProvider, Divider } from "@mui/material";
 import { ColorModeContext, useMode } from "../theme";
 import Topbar from "../components/topbar";
@@ -21,7 +21,11 @@ function RoutesController() {
   // const { signed } = true;
 
   const Private = ({ item }: any) => {
-    return user.tipoUsuario === "master" ? item : <></>;
+    if (!signed || user.tipoUsuario !== "master") {
+      return <Navigate to="/" replace />; // Redireciona para a página de login
+    }
+
+    return item;
   };
 
   return (
@@ -34,7 +38,7 @@ function RoutesController() {
             {signed ? <Topbar /> : <></>}
             <Divider />
             <Routes>
-              <Route path="/dashboard" element={<Dashboard />} />
+              {signed && <Route path="/dashboard" element={<Dashboard />} />}
               {signed && <Route path="/livros" element={<Livros />} />}
               {signed && (
                 <Route
