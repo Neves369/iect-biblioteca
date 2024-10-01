@@ -74,21 +74,21 @@ const Topbar = () => {
             </MenuItem>
             <MenuItem
               onClick={() => {
-                navigate("/emprestimos"), handleClose();
+                navigate("/livros"), handleClose();
               }}
             >
-              Empréstimos
+              Livros
             </MenuItem>
-            {user.tipoUsuario == "master " && (
+            {user.tipoUsuario == "master" && (
               <MenuItem
                 onClick={() => {
-                  navigate("/livros"), handleClose();
+                  navigate("/emprestimos"), handleClose();
                 }}
               >
-                Livros
+                Emprestimos
               </MenuItem>
             )}
-            {user.tipoUsuario == "master " && (
+            {user.tipoUsuario == "master" && (
               <MenuItem
                 onClick={() => {
                   navigate("/usuarios"), handleClose();

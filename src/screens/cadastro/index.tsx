@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
 import logo from "../../assets/logocg.webp";
-// import AuthContext from "../../context/auth";
-// import { useNavigate } from "react-router-dom";
+import AuthContext from "../../context/auth";
+import { useNavigate } from "react-router-dom";
 import background from "../../assets/fundo.webp";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Box,
   Card,
@@ -16,8 +16,8 @@ import {
 import UsuarioService from "../../services/UsuarioService";
 
 const Cadastro: React.FC = () => {
-  // const navigate = useNavigate();
-  // const { signIn } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const { signIn } = useContext(AuthContext);
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [submitting, setSubmitting] = useState(false);
   const {
@@ -31,9 +31,8 @@ const Cadastro: React.FC = () => {
     data.tipoUsuario = "usuario";
     UsuarioService.salvarUsuario(data)
       .then((resp) => {
-        console.log(resp);
-        // signIn(resp);
-        // navigate("/dashboard");
+        signIn(resp);
+        navigate("/dashboard");
       })
       .catch(() => {})
       .finally(() => {
@@ -70,7 +69,7 @@ const Cadastro: React.FC = () => {
           </div>
 
           <Typography color="#ADADAD" fontSize={30}>
-            Bem vindo
+            Cadastre-se
           </Typography>
 
           <TextField
@@ -151,7 +150,7 @@ const Cadastro: React.FC = () => {
           <Button
             type="submit"
             disabled={submitting}
-            style={{ marginTop: 50, width: "100%" }}
+            style={{ marginTop: 30, width: "100%" }}
             variant="contained"
           >
             {submitting ? (

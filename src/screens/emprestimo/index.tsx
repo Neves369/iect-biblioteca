@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Header from "../../components/header";
 import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { localizedTextsMap } from "../../utils/localeTextTable";
 
 import {
@@ -15,19 +16,30 @@ import {
   DialogActions,
   DialogContentText,
   IconButton,
+  Accordion,
+  AccordionSummary,
+  Typography,
+  AccordionDetails,
+  Divider,
+  TextField,
+  FormControlLabel,
+  Checkbox,
 } from "@mui/material";
 
 import { DataGrid } from "@mui/x-data-grid";
 import { CheckCircle, Close } from "@mui/icons-material";
 import CustomToolbar from "../../components/CustomMui/CustomToolbar";
 import EmprestimoService from "../../services/EmprestimoService";
+import { useForm } from "react-hook-form";
 
 const Emprestimos = () => {
+  const { register, handleSubmit } = useForm();
   const [loading, setLoading] = useState(false);
-  const [userAction, setUserAction] = useState("");
   const [emprestimos, setEmprestimos] = useState([]);
   const isNonMobile = useMediaQuery("(min-width:600px)");
+  const [savedFilters, setSavedFilters] = useState<any>();
   const [showDialogConfirm, setShowDialogConfirm] = useState(false);
+  const [emprestimoSelecionado, setEmprestimoSelecionado] = useState<any>();
 
   // colunas exibidas na lista
   const columns: any = [
@@ -58,7 +70,7 @@ const Emprestimos = () => {
     },
     {
       field: "finalizar",
-      headerName: "Finalizar",
+      headerName: savedFilters?.status === true ? "Finalizar" : "Finalizado",
       sortable: false,
       width: 80,
       disableClickEventBubbling: true,
@@ -76,12 +88,12 @@ const Emprestimos = () => {
   ];
 
   // Pesquisar Produtos
-  const pesquisar = () => {
+  const pesquisar = (values: any) => {
     setLoading(true);
+    setSavedFilters(values);
 
-    EmprestimoService.listarEmprestimos()
+    EmprestimoService.listarEmprestimos(values)
       .then((resp) => {
-        console.log(resp);
         setEmprestimos(resp);
       })
       .catch((e) => {
@@ -95,12 +107,9 @@ const Emprestimos = () => {
   // Coluna de ativar e inativar
   const MatAtive = ({ index }: any) => {
     const handleEditClick = () => {
-      if (index.status === true) {
-        setUserAction("Inativar");
+      if (index.data_devolucao === null) {
         setShowDialogConfirm(true);
-      } else {
-        setUserAction("Ativar");
-        setShowDialogConfirm(true);
+        setEmprestimoSelecionado(index);
       }
     };
 
@@ -110,7 +119,7 @@ const Emprestimos = () => {
         aria-label="add an alarm"
         onClick={handleEditClick}
       >
-        {index.status === true ? (
+        {index.data_devolucao !== null ? (
           <Close color="error" />
         ) : (
           <CheckCircle color="success" />
@@ -122,6 +131,18 @@ const Emprestimos = () => {
   // ativar e inativar produtos
   const ativar_inativar = () => {
     setShowDialogConfirm(false);
+
+    EmprestimoService.finalizarEmprestimo(emprestimoSelecionado.id)
+      .then((resp) => {
+        setEmprestimos(resp);
+        pesquisar(savedFilters);
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
@@ -140,7 +161,7 @@ const Emprestimos = () => {
                 marginRight: 1,
               }}
               onClick={() => {
-                pesquisar();
+                document.getElementById("btn_filter")?.click();
               }}
             >
               <SearchIcon sx={{ mr: "10px" }} />
@@ -176,7 +197,7 @@ const Emprestimos = () => {
               marginRight: 1,
             }}
             onClick={() => {
-              pesquisar();
+              document.getElementById("btn_filter")?.click();
             }}
           >
             <SearchIcon sx={{ mr: "10px" }} />
@@ -200,6 +221,90 @@ const Emprestimos = () => {
         </Box>
       )}
 
+      {/* Filtros */}
+      <Box m="40px 0 0 0" minHeight="5vh">
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography>Filtros</Typography>
+          </AccordionSummary>
+
+          <AccordionDetails>
+            <Divider />
+
+            <form id="form" onSubmit={handleSubmit(pesquisar)}>
+              <button
+                disabled={loading}
+                id="btn_filter"
+                type="submit"
+                style={{ display: "none" }}
+              />
+              <Box
+                display="grid"
+                gap="30px"
+                marginTop={2}
+                gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+                sx={{
+                  "& > div": {
+                    gridColumn: isNonMobile ? undefined : "span 4",
+                  },
+                }}
+              >
+                <TextField
+                  fullWidth
+                  variant="filled"
+                  type="text"
+                  label="Nome do Usuário"
+                  {...register("usuario", {
+                    required: false,
+                  })}
+                  sx={{ gridColumn: "span 2" }}
+                />
+                {isNonMobile ? (
+                  <div style={{ gridColumn: "span 2" }}></div>
+                ) : (
+                  <></>
+                )}
+
+                <TextField
+                  fullWidth
+                  variant="filled"
+                  type="text"
+                  label="Título do Livro"
+                  {...register("livro", {
+                    required: false,
+                  })}
+                  sx={{ gridColumn: "span 2" }}
+                />
+
+                {isNonMobile ? (
+                  <div style={{ gridColumn: "span 2" }}></div>
+                ) : (
+                  <></>
+                )}
+
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      defaultChecked
+                      {...register("status", {
+                        required: false,
+                      })}
+                      name="status"
+                    />
+                  }
+                  label="Ativo"
+                />
+              </Box>
+            </form>
+          </AccordionDetails>
+        </Accordion>
+      </Box>
+      {/*  */}
+
       {/* Lista */}
       <Box m="40px 0 0 0" height="75vh">
         <DataGrid
@@ -222,10 +327,10 @@ const Emprestimos = () => {
         }}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{userAction} Perfil</DialogTitle>
+        <DialogTitle>Finalizar Empréstimo</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            Tem certeza que deseja {userAction} este perfil?
+            Tem certeza que deseja finalizar este empréstimo?
           </DialogContentText>
         </DialogContent>
         <DialogActions>

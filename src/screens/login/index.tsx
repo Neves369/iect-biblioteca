@@ -70,7 +70,7 @@ const Login: React.FC = () => {
           </div>
 
           <Typography color="#ADADAD" fontSize={30}>
-            Bem vindo
+            Bem vindo!
           </Typography>
 
           <TextField
@@ -115,7 +115,7 @@ const Login: React.FC = () => {
           <Button
             type="submit"
             disabled={submitting}
-            style={{ marginTop: 50, width: "100%" }}
+            style={{ marginTop: 50, marginBottom: 5, width: "100%" }}
             variant="contained"
           >
             {submitting ? (

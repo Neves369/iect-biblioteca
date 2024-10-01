@@ -66,7 +66,7 @@ const salvarUsuario = async (usuario: any) => {
 
     try {
         const {
-            data: { session},
+            data,
             error,
           } = await supabase.auth.signUp({
             email: usuario.email,
@@ -76,8 +76,7 @@ const salvarUsuario = async (usuario: any) => {
       
           if (error) return error.message
 
-
-          if (session){
+          if (data.user){
             const { error } = await supabase
             .from('usuario')
             .update([{ 
@@ -85,21 +84,20 @@ const salvarUsuario = async (usuario: any) => {
                 telefone: usuario.telefone,  
                 email: usuario.email,
                 tipo_usuario: usuario.tipoUsuario,
-            }]).eq('id',  session.user.id);
+            }]).eq('id',  data.user.id);
 
             if (error) {
                 return error.message;
             }
 
             const newUser = {
-                id: session.user.id,
+                id: data.user.id,
                 nome: usuario.nome,
                 telefone: usuario.telefone,
                 dataCadastro: moment.now(),            
                 email: usuario.email,
                 status: true,
                 tipoUsuario: usuario.tipoUsuario,
-                token: session.access_token
             }
 
             return newUser;

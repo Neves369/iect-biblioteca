@@ -13,21 +13,16 @@ import {
   Box,
   Button,
   Divider,
-  DialogContent,
   FormControlLabel,
   TextField,
   Typography,
   useMediaQuery,
   Checkbox,
-  Dialog,
-  DialogTitle,
-  DialogActions,
-  DialogContentText,
   IconButton,
 } from "@mui/material";
 
 import { DataGrid } from "@mui/x-data-grid";
-import { CheckCircle, Close, Edit } from "@mui/icons-material";
+import { Edit } from "@mui/icons-material";
 import CustomToolbar from "../../components/CustomMui/CustomToolbar";
 import { useForm } from "react-hook-form";
 import LivroService from "../../services/LivroService";
@@ -39,12 +34,7 @@ const Livros = () => {
   const { user } = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
   const [loading, setLoading] = useState(false);
-  const [userAction, setUserAction] = useState("");
   const isNonMobile = useMediaQuery("(min-width:600px)");
-  const [showDialogConfirm, setShowDialogConfirm] = useState(false);
-
-  // salva os fitros da última pesquisa par sere usados ao atualizar lista
-  const [savedFilters, setSavedFilters] = useState<any>();
 
   // colunas exibidas na lista
   const columns: any = [
@@ -62,7 +52,7 @@ const Livros = () => {
       cellClassName: "autor-column--cell",
     },
     {
-      field: "ano",
+      field: "ano_publicacao",
       headerName: "Ano de Publicação",
       flex: 0.5,
       cellClassName: "ano-column--cell",
@@ -84,29 +74,11 @@ const Livros = () => {
         );
       },
     },
-    {
-      field: "ativar_inativar",
-      headerName: savedFilters?.status === true ? "Inativar" : "Ativar",
-      sortable: false,
-      width: 80,
-      disableClickEventBubbling: true,
-      renderCell: (params: any) => {
-        return (
-          <div
-            className="d-flex justify-content-between align-items-center"
-            style={{ cursor: "pointer" }}
-          >
-            <MatAtive index={params.row} />
-          </div>
-        );
-      },
-    },
   ];
 
   // Pesquisar Produtos
   const pesquisar = (values: any) => {
     setLoading(true);
-    setSavedFilters(values);
 
     LivroService.listarLivros()
       .then((resp) => {
@@ -133,38 +105,6 @@ const Livros = () => {
         <Edit />
       </IconButton>
     );
-  };
-
-  // Coluna de ativar e inativar
-  const MatAtive = ({ index }: any) => {
-    const handleEditClick = () => {
-      if (index.status === true) {
-        setUserAction("Inativar");
-        setShowDialogConfirm(true);
-      } else {
-        setUserAction("Ativar");
-        setShowDialogConfirm(true);
-      }
-    };
-
-    return (
-      <IconButton
-        color="secondary"
-        aria-label="add an alarm"
-        onClick={handleEditClick}
-      >
-        {index.status === true ? (
-          <Close color="error" />
-        ) : (
-          <CheckCircle color="success" />
-        )}
-      </IconButton>
-    );
-  };
-
-  // ativar e inativar produtos
-  const ativar_inativar = () => {
-    setShowDialogConfirm(false);
   };
 
   return (
@@ -356,48 +296,14 @@ const Livros = () => {
               columnVisibilityModel: {
                 id: isNonMobile,
                 categoria: isNonMobile,
-                editar: isNonMobile || user.tipoUsuario == "master",
-                ativar_inativar: isNonMobile || user.tipoUsuario == "master",
+                editar: isNonMobile && user.tipoUsuario == "master",
+                ativar_inativar: isNonMobile && user.tipoUsuario == "master",
               },
             },
           }}
           loading={loading}
         />
       </Box>
-      {/*  */}
-
-      {/* Confirmação */}
-      <Dialog
-        open={showDialogConfirm}
-        keepMounted
-        onClose={() => {
-          setShowDialogConfirm(false);
-        }}
-        aria-describedby="alert-dialog-slide-description"
-      >
-        <DialogTitle>{userAction} Livro</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            Tem certeza que deseja {userAction} este Livro?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={() => {
-              setShowDialogConfirm(false);
-            }}
-          >
-            Não
-          </Button>
-          <Button
-            onClick={() => {
-              ativar_inativar();
-            }}
-          >
-            Sim
-          </Button>
-        </DialogActions>
-      </Dialog>
       {/*  */}
     </Box>
   );
