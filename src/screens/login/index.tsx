@@ -145,7 +145,10 @@ const Login: React.FC = () => {
         }}
       >
         <Container maxWidth="sm">
-          <Typography sx={{ color: "white" }} variant="body1">
+          <Typography
+            sx={{ color: "white", textAlign: "center" }}
+            variant="body1"
+          >
             2024 - Desenvolvido por Neves369©, todos os direitos reservados.
           </Typography>
         </Container>
