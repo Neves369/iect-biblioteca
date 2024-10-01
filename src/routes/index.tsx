@@ -34,7 +34,7 @@ function RoutesController() {
             {signed ? <Topbar /> : <></>}
             <Divider />
             <Routes>
-              {signed && <Route path="/dashboard" element={<Dashboard />} />}
+              <Route path="/dashboard" element={<Dashboard />} />
               {signed && <Route path="/livros" element={<Livros />} />}
               {signed && (
                 <Route
