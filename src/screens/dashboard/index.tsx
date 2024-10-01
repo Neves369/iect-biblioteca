@@ -182,7 +182,7 @@ const Dashboard = () => {
             sx={{ backgroundColor: "lightgray" }}
           >
             <Box flex={1}>
-              <Avatar sx={{ bgcolor: "#fb7f63" }}>JP</Avatar>
+              <Avatar sx={{ bgcolor: "#fb7f63" }}>JS</Avatar>
             </Box>
             <Box
               flex={3}
@@ -212,7 +212,7 @@ const Dashboard = () => {
             sx={{ backgroundColor: "lightgray" }}
           >
             <Box flex={1}>
-              <Avatar sx={{ bgcolor: "#fb7f63" }}>JP</Avatar>
+              <Avatar sx={{ bgcolor: "#fb7f63" }}>ML</Avatar>
             </Box>
             <Box
               flex={3}
