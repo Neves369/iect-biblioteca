@@ -142,7 +142,12 @@ const Cadastro: React.FC = () => {
               marginTop: 30,
             }}
           >
-            <a className="linkLogin" href="/">
+            <a
+              className="linkLogin"
+              onClick={() => {
+                navigate("/");
+              }}
+            >
               Já possuo uma conta
             </a>
           </div>

@@ -107,7 +107,12 @@ const Login: React.FC = () => {
               marginTop: 30,
             }}
           >
-            <a className="linkLogin" href="/recuperar-acesso">
+            <a
+              className="linkLogin"
+              onClick={() => {
+                navigate("/cadastrar");
+              }}
+            >
               Esqueci a senha
             </a>
           </div>
