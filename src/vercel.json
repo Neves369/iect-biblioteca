@@ -1,15 +1,5 @@
 {
-    "rewrites": [
-      {
-        "source": "/(.*)",
-        "destination": "/",
-        "has": [
-          {
-            "type": "host",
-            "value": "https://biblioteca-iect.vercel.app/"  
-          }
-        ]
-      }
-    ]
-  }
-  
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" }
+  ]
+}
