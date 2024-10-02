@@ -14,7 +14,6 @@ import { useEffect, useState } from "react";
 import UsuarioService from "../../../services/UsuarioService";
 import LivroService from "../../../services/LivroService";
 import EmprestimoService from "../../../services/EmprestimoService";
-import { SwapHoriz } from "@mui/icons-material";
 
 const CadastrarEmprestimo = () => {
   const navigate = useNavigate();
