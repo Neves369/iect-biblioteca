@@ -30,6 +30,7 @@ const Cadastro: React.FC = () => {
 
   const onSubmit = (data: any) => {
     setSubmitting(true);
+    data.telefone = data.telefone.replace(/[^0-9]/g, "");
     data.tipoUsuario = "usuario";
     UsuarioService.salvarUsuario(data)
       .then((resp) => {
