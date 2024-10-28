@@ -33,9 +33,13 @@ const Cadastro: React.FC = () => {
     data.telefone = data.telefone.replace(/[^0-9]/g, "");
     data.tipoUsuario = "usuario";
     UsuarioService.salvarUsuario(data)
-      .then((resp) => {
-        signIn(resp);
-        navigate("/dashboard");
+      .then((resp: any) => {
+        if (resp.token) {
+          signIn(resp);
+          navigate("/dashboard");
+        } else {
+          window.alert("Não foi possível realizar o login!");
+        }
       })
       .catch(() => {})
       .finally(() => {

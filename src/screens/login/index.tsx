@@ -31,8 +31,12 @@ const Login: React.FC = () => {
     setSubmitting(true);
     UsuarioService.login(data)
       .then((resp) => {
-        signIn(resp);
-        navigate("/dashboard");
+        if (resp.token) {
+          signIn(resp);
+          navigate("/dashboard");
+        } else {
+          window.alert("Não foi possível realizar o login!");
+        }
       })
       .catch((e) => {
         console.log(e);
