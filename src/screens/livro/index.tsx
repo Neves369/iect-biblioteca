@@ -52,6 +52,22 @@ const Livros = () => {
       cellClassName: "autor-column--cell",
     },
     {
+      field: "capa",
+      headerName: "Capa",
+      flex: 0.5,
+      renderCell: (params: { value: string | undefined }) => (
+        <img
+          src={params.value}
+          alt="livro"
+          style={{
+            width: "50px",
+            height: "50px",
+            borderRadius: "4px",
+          }}
+        />
+      ),
+    },
+    {
       field: "ano_publicacao",
       headerName: "Ano de Publicação",
       flex: 0.5,
@@ -283,6 +299,7 @@ const Livros = () => {
             columns: {
               columnVisibilityModel: {
                 id: isNonMobile,
+                capa: isNonMobile,
                 ano_publicacao: isNonMobile,
                 editar: user.tipoUsuario == "master",
                 ativar_inativar: isNonMobile && user.tipoUsuario == "master",

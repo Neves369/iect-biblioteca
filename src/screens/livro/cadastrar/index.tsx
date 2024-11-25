@@ -9,6 +9,7 @@ import {
   Tab,
   Button,
   CircularProgress,
+  Autocomplete,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import LivroService from "../../../services/LivroService";
@@ -18,6 +19,7 @@ const CadastrarLivro = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
   const [loading, setLoading] = useState(false);
+  const [tags, setTags] = useState<string[]>([]);
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const {
     register,
@@ -25,21 +27,34 @@ const CadastrarLivro = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const options = [
+    "Teologia e Doutrina",
+    "Estudos Bíblicos",
+    "História da Igreja e Biografias",
+    "Devocional e Vida Cristã",
+    "Família e Educação",
+    "Apologética",
+    "Literatura",
+  ];
 
   useEffect(() => {
     if (state) {
       setValue("titulo", state.titulo);
       setValue("autor", state.autor);
       setValue("ano_publicacao", state.ano_publicacao);
+      setValue("descricao", state.descricao);
+      setValue("capa", state.capa);
+      setTags(state.tags);
     }
   }, [setValue, state]);
 
   const salvar = async (values: any) => {
     setLoading(true);
 
+    values.tags = tags;
+
     LivroService.salvarLivro(values)
       .then((resp: any) => {
-        console.log("teste: ", resp);
         if (resp == "201") {
           window.alert("Livro cadastrado com sucesso!");
           setTimeout(() => {
@@ -59,6 +74,8 @@ const CadastrarLivro = () => {
 
   const editar = async (values: any) => {
     setLoading(true);
+
+    values.tags = tags;
 
     LivroService.editarLivro(values, state.id)
       .then((resp: any) => {
@@ -113,6 +130,7 @@ const CadastrarLivro = () => {
               helperText={errors.titulo ? "Título é obrigatório" : ""}
               sx={{ gridColumn: "span 2" }}
             />
+
             <TextField
               fullWidth
               variant="outlined"
@@ -140,6 +158,43 @@ const CadastrarLivro = () => {
                 errors.ano_publicao ? "Ano de Publicação é obrigatório" : ""
               }
               sx={{ gridColumn: "span 2" }}
+            />
+
+            <Autocomplete
+              multiple
+              options={options} // Opções disponíveis
+              value={tags} // Valor atual selecionado
+              onChange={(event, newValue) => {
+                setTags(newValue);
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Escolha as tags"
+                  placeholder="Adicionar"
+                />
+              )}
+              sx={{ gridColumn: "span 2" }}
+            />
+
+            <TextField
+              fullWidth
+              variant="outlined"
+              type="text"
+              label="Link da Capa"
+              {...register("capa")}
+              sx={{ gridColumn: "span 4" }}
+            />
+
+            <TextField
+              fullWidth
+              multiline
+              minRows={2}
+              variant="outlined"
+              type="text"
+              label="Descrição"
+              {...register("descricao")}
+              sx={{ gridColumn: "span 4" }}
             />
           </Box>
 

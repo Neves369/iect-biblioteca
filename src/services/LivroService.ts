@@ -4,7 +4,6 @@ import exceptionHandler from "../utils/ExceptionHandler";
 
 const listarLivros = async () => {
     try {
-        
         const { data, error } = await supabase
         .from('livro')
         .select("*");      
@@ -42,6 +41,9 @@ const salvarLivro = async (livro: any) => {
             titulo: livro.titulo, 
             autor: livro.autor,  
             ano_publicacao: livro.ano_publicacao,
+            descricao: livro.descricao,
+            tags: livro.tags,
+            capa: livro.capa
         });
 
         if (error) {
@@ -56,7 +58,6 @@ const salvarLivro = async (livro: any) => {
     }
 }
 
-
 const editarLivro = async (livro: any, id: any) => {
     try {
         const { error, status } = await supabase
@@ -65,6 +66,9 @@ const editarLivro = async (livro: any, id: any) => {
             titulo: livro.titulo, 
             autor: livro.autor,  
             ano_publicacao: livro.ano_publicacao,
+            descricao: livro.descricao,
+            tags: livro.tags,
+            capa: livro.capa
         }).eq('id',  id);
 
         if (error) {
