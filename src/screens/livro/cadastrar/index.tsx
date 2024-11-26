@@ -35,6 +35,7 @@ const CadastrarLivro = () => {
     "Família e Educação",
     "Apologética",
     "Literatura",
+    "Filosofia",
   ];
 
   useEffect(() => {

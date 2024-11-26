@@ -19,6 +19,7 @@ import {
   useMediaQuery,
   Checkbox,
   IconButton,
+  Modal,
 } from "@mui/material";
 
 import { DataGrid } from "@mui/x-data-grid";
@@ -32,9 +33,11 @@ const Livros = () => {
   const navigate = useNavigate();
   const [livros, setLivros] = useState([]);
   const { user } = useContext(AuthContext);
+  const [open, setOpen] = useState(false);
   const { register, handleSubmit } = useForm();
   const [loading, setLoading] = useState(false);
   const isNonMobile = useMediaQuery("(min-width:600px)");
+  const [livroSelecionado, setLivroSelecionado] = useState<any>();
 
   // colunas exibidas na lista
   const columns: any = [
@@ -57,11 +60,15 @@ const Livros = () => {
       flex: 0.5,
       renderCell: (params: { value: string | undefined }) => (
         <img
+          onClick={() => {
+            setLivroSelecionado(params.value);
+            setOpen(true);
+          }}
           src={params.value}
           alt="livro"
           style={{
             width: "50px",
-            height: "50px",
+            height: "100%",
             borderRadius: "4px",
           }}
         />
@@ -310,6 +317,35 @@ const Livros = () => {
         />
       </Box>
       {/*  */}
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "rgba(0,0,0, 0.2)",
+            boxShadow: 24,
+            borderRadius: "10px",
+          }}
+        >
+          <img
+            src={livroSelecionado}
+            alt="livro"
+            style={{
+              width: "400px",
+              height: "500px",
+              borderRadius: "10px",
+            }}
+          />
+        </Box>
+      </Modal>
     </Box>
   );
 };
