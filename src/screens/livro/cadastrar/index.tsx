@@ -164,7 +164,7 @@ const CadastrarLivro = () => {
               multiple
               options={options} // Opções disponíveis
               value={tags} // Valor atual selecionado
-              onChange={(event, newValue) => {
+              onChange={(_, newValue) => {
                 setTags(newValue);
               }}
               renderInput={(params) => (
