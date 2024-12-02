@@ -46,12 +46,28 @@ const login = async (usuario: any) => {
     }
 }
 
-const listarUsuarios = async () => {
+const listarUsuarios = async (filtros: any) => {
     try {
-        
-        const { data, error } = await supabase
-        .from('usuario')
-        .select("*");      
+        // Filtra os filtros vazios
+        const where = Object.fromEntries(
+            Object.entries(filtros).filter(([, value]) => value !== "")
+        );
+
+        // Inicia a consulta
+        let query = supabase.from('usuario_sem_acento').select("*");
+
+        // Aplica os filtros dinamicamente
+        for (const [key, value] of Object.entries(where)) {
+            if (key === "nome") {
+                query = query.ilike("nome_sem_acento", `%${value}%`);
+            } else if (key === "email") {
+                query = query.ilike("email_sem_acento", `%${value}%`);
+            } else if (key === "status") {
+                query = query.eq(key, value);
+            }
+        }
+
+        const { data, error } = await query; // Executa a consulta
 
         if (error) {
             return error.message;
@@ -60,7 +76,9 @@ const listarUsuarios = async () => {
     } catch (error) {
         return exceptionHandler(error);
     }
-}
+};
+
+
 
 const salvarUsuario = async (usuario: any) => {
 
@@ -154,34 +172,21 @@ const salvarUsuario2 = async (usuario: any) => {
     }
 }
 
-const editarUsuario = async (usuario: any) => {
+const editarUsuario = async (usuarioId: string, usuario: any) => {
     try {
-        const { error } = await supabase
+        const { error, status } = await supabase
         .from('usuario')
-        .update([{ 
+        .update({ 
             nome: usuario.nome, 
             telefone: usuario.telefone,  
             documento: usuario.documento, 
-        }]).eq('id',  usuario.id);
+        }).eq('id',  usuarioId);
 
         if (error) {
             return error.message;
         }
 
-        const newUser = {
-            id: usuario.id,
-            nome: usuario.nome,
-            documento: usuario.documento,
-            telefone: usuario.telefone,
-            dataCadastro: usuario.dataCadastro,            
-            email: usuario.email,
-            status: usuario.status,
-            tipoPessoa: usuario.tipoPessoa,
-            avatar_url: usuario.avatar_url,
-            token: usuario.token
-        }
-
-        return newUser;
+        return status;
     
     
     } catch (error) {

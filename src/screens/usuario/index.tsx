@@ -104,7 +104,7 @@ const Usuarios = () => {
     setLoading(true);
     setSavedFilters(values);
 
-    UsuarioService.listarUsuarios()
+    UsuarioService.listarUsuarios(values)
       .then((resp) => {
         setUsuarios(resp);
       })

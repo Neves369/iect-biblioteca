@@ -82,23 +82,24 @@ const CadastrarUsuario = () => {
       delete values.confirm_senha;
     }
 
-    // UsuarioService.editarUsuario(state.id, values)
-    //   .then((resp: any) => {
-    //     if (resp.status === 200 || resp.status === 201) {
-    //       window.alert("Usuário Editado com sucesso!");
-    //       setTimeout(() => {
-    //         navigate("/usuarios");
-    //       }, 1000);
-    //     } else {
-    //       window.alert(resp);
-    //     }
-    //   })
-    //   .catch((e) => {
-    //     window.alert(e);
-    //   })
-    //   .finally(() => {
-    //     setLoading(false);
-    //   });
+    UsuarioService.editarUsuario(state.id, values)
+      .then((resp: any) => {
+        console.log("teste: ", resp);
+        if (resp == "204") {
+          window.alert("Usuário Editado com sucesso!");
+          setTimeout(() => {
+            navigate("/usuarios");
+          }, 1000);
+        } else {
+          window.alert(resp);
+        }
+      })
+      .catch((e) => {
+        window.alert(e);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const changeTab = (_event: SyntheticEvent, newValue: number) => {

@@ -7,27 +7,25 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { localizedTextsMap } from "../../utils/localeTextTable";
 
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
   Box,
+  Modal,
   Button,
   Divider,
-  FormControlLabel,
+  Accordion,
   TextField,
   Typography,
-  useMediaQuery,
-  Checkbox,
   IconButton,
-  Modal,
+  useMediaQuery,
+  AccordionDetails,
+  AccordionSummary,
 } from "@mui/material";
 
-import { DataGrid } from "@mui/x-data-grid";
-import { Edit } from "@mui/icons-material";
-import CustomToolbar from "../../components/CustomMui/CustomToolbar";
 import { useForm } from "react-hook-form";
-import LivroService from "../../services/LivroService";
+import { Edit } from "@mui/icons-material";
+import { DataGrid } from "@mui/x-data-grid";
 import AuthContext from "../../context/auth";
+import LivroService from "../../services/LivroService";
+import CustomToolbar from "../../components/CustomMui/CustomToolbar";
 
 const Livros = () => {
   const navigate = useNavigate();
@@ -100,10 +98,10 @@ const Livros = () => {
   ];
 
   // Pesquisar Produtos
-  const pesquisar = () => {
+  const pesquisar = (values: any) => {
     setLoading(true);
 
-    LivroService.listarLivros()
+    LivroService.listarLivros(values)
       .then((resp) => {
         setLivros(resp);
       })
@@ -274,19 +272,6 @@ const Livros = () => {
                   sx={{ gridColumn: "span 2" }}
                 />
                 {isNonMobile && <div style={{ gridColumn: "span 2" }}></div>}
-
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      defaultChecked
-                      {...register("status", {
-                        required: false,
-                      })}
-                      name="status"
-                    />
-                  }
-                  label="Ativo"
-                />
               </Box>
             </form>
           </AccordionDetails>

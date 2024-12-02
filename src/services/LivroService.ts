@@ -2,16 +2,35 @@ import supabase  from "../api";
 import exceptionHandler from "../utils/ExceptionHandler";
 
 
-const listarLivros = async () => {
+const listarLivros = async (filtros: any) => {
     try {
-        const { data, error } = await supabase
-        .from('livro')
-        .select("*");      
 
-        if (error) {
-            return error.message;
+          // Filtra os filtros vazios
+          const where = Object.fromEntries(
+            Object.entries(filtros).filter(([, value]) => value !== "")
+        );
+
+         // Inicia a consulta
+         let query = supabase.from('livro_sem_acento').select("*");
+
+
+       // Aplica os filtros dinamicamente
+       for (const [key, value] of Object.entries(where)) {
+        if (key === "titulo") {
+            query = query.ilike("titulo_sem_acento", `%${value}%`);
+        } else if (key === "autor") {
+            query = query.ilike("autor_sem_acento", `%${value}%`);
+        } else if (key === "ano_publicacao") {
+            query = query.eq(key, value);
         }
-        return data;
+    }
+
+    const { data, error } = await query; // Executa a consulta
+
+    if (error) {
+        return error.message;
+    }
+    return data;
     } catch (error) {
         return exceptionHandler(error);
     }
