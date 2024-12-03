@@ -1,18 +1,18 @@
-import React, { useContext, useState } from "react";
-import logo from "../../assets/logocg.webp";
-import { useNavigate } from "react-router-dom";
-import AuthContext from "../../context/auth";
 import { useForm } from "react-hook-form";
+import logo from "../../assets/logocg.webp";
+import AuthContext from "../../context/auth";
+import { useNavigate } from "react-router-dom";
 import background from "../../assets/fundo.webp";
+import React, { useContext, useState } from "react";
 import {
-  Card,
-  TextField,
-  Typography,
-  Button,
-  CircularProgress,
   Box,
+  Card,
+  Button,
+  TextField,
   Container,
+  Typography,
   useMediaQuery,
+  CircularProgress,
 } from "@mui/material";
 import UsuarioService from "../../services/UsuarioService";
 
@@ -51,12 +51,12 @@ const Login: React.FC = () => {
       sx={{
         height: "100vh",
         display: "flex",
-        justifyContent: "center",
         alignItems: "center",
-        backgroundImage: `url(${background})`,
         backgroundSize: "cover",
+        justifyContent: "center",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
+        backgroundImage: `url(${background})`,
       }}
     >
       <form onSubmit={handleSubmit(onSubmit)}>

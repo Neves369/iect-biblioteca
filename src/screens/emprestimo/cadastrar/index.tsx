@@ -10,8 +10,8 @@ import {
   MenuItem,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import UsuarioService from "../../../services/UsuarioService";
 import LivroService from "../../../services/LivroService";
+import UsuarioService from "../../../services/UsuarioService";
 import EmprestimoService from "../../../services/EmprestimoService";
 
 const CadastrarEmprestimo = () => {
