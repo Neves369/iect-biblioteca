@@ -100,7 +100,7 @@ const Topbar = () => {
 
             <MenuItem
               onClick={() => {
-                signOutClearAll(), handleClose();
+                signOutClearAll(), navigate("/"), handleClose();
               }}
             >
               Sair

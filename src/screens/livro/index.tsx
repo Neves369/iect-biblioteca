@@ -188,21 +188,23 @@ const Livros = () => {
             <SearchIcon sx={{ mr: "10px" }} />
             Pesquisar
           </Button>
-          <Link
-            to={"/cadastrar-livro"}
-            style={{ textDecoration: "none", marginRight: 1 }}
-          >
-            <Button
-              sx={{
-                fontSize: "14px",
-                fontWeight: "bold",
-                padding: "10px 20px",
-              }}
+          {user.tipoUsuario == "master" && (
+            <Link
+              to={"/cadastrar-livro"}
+              style={{ textDecoration: "none", marginRight: 1 }}
             >
-              <AddIcon sx={{ mr: "10px" }} />
-              Novo
-            </Button>
-          </Link>
+              <Button
+                sx={{
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  padding: "10px 20px",
+                }}
+              >
+                <AddIcon sx={{ mr: "10px" }} />
+                Novo
+              </Button>
+            </Link>
+          )}
         </Box>
       )}
 
