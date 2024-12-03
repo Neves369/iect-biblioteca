@@ -119,13 +119,15 @@ export const localizedTextsMap = {
     count !== 1
       ? `${count.toLocaleString()} Linhas selecionadas`
       : `${count.toLocaleString()} Linha selecionada`,
+      
 
   // Total row amount footer text
   footerTotalRows: 'Total de Linhas:',
 
   // Total visible row amount footer text
   footerTotalVisibleRows: (visibleCount: any, totalCount: any) =>
-    `${visibleCount.toLocaleString()} of ${totalCount.toLocaleString()}`,
+    `${visibleCount.toLocaleString()} de ${totalCount.toLocaleString()}`,
+  
 
   // Checkbox selection text
   checkboxSelectionHeaderName: 'Checkbox selection',
