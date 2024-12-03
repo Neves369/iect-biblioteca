@@ -52,7 +52,7 @@ const CadastrarEmprestimo = () => {
   };
 
   const pesquisarUsuarios = async () => {
-    UsuarioService.listarUsuarios()
+    UsuarioService.listarUsuarios([])
       .then((resp) => {
         setUsuarios(resp);
       })

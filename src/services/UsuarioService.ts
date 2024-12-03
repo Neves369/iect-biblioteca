@@ -44,7 +44,7 @@ const login = async (usuario: any) => {
     } catch (error) {
         return exceptionHandler(error);
     }
-}
+};
 
 const listarUsuarios = async (filtros: any) => {
     try {
@@ -78,10 +78,7 @@ const listarUsuarios = async (filtros: any) => {
     }
 };
 
-
-
 const salvarUsuario = async (usuario: any) => {
-
     try {
         const {
             data,
@@ -124,10 +121,9 @@ const salvarUsuario = async (usuario: any) => {
     } catch (error) {
         return error;
     }
-}
+};
 
 const salvarUsuario2 = async (usuario: any) => {
-
     try {
         const {
             data,
@@ -170,7 +166,7 @@ const salvarUsuario2 = async (usuario: any) => {
     } catch (error) {
         return error;
     }
-}
+};
 
 const editarUsuario = async (usuarioId: string, usuario: any) => {
     try {
@@ -192,7 +188,7 @@ const editarUsuario = async (usuarioId: string, usuario: any) => {
     } catch (error) {
         return error;
     }
-}
+};
 
 
 export default {
