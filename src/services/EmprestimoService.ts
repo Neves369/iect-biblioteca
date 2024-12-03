@@ -5,29 +5,42 @@ import exceptionHandler from "../utils/ExceptionHandler";
 
 const listarEmprestimos = async (filters: any) => {
     try {
-        let resp: any;
-       
-        if(filters.status == true){
-            resp = await supabase
-            .from('full_emprestimos')
-            .select('*').is('data_devolucao', null);      
 
-        }
-        else{
-            resp = await supabase
-            .from('full_emprestimos')
-            .select("*").not('data_devolucao', 'is', null);      
-    
+        // Filtra os filtros vazios
+        const where = Object.fromEntries(
+            Object.entries(filters).filter(([, value]) => value !== "")
+        );
+
+        // Inicia a consulta
+        let query = supabase.from('full_emprestimos').select("*");
+
+        // Aplica os filtros dinamicamente
+        for (const [key, value] of Object.entries(where)) {
+            if (key === "usuario") {
+                query = query.ilike("usuario_nome", `%${value}%`);
+            } else if (key === "livro") {
+                query = query.ilike("livro_titulo", `%${value}%`);
+            } else if (key === "status") {
+                if(value == true){
+                    query = query.is('data_devolucao', null);
+                }
+                if(value == false){
+                    query = query.not('data_devolucao', 'is',  null);
+                }
+            }
         }
 
-        if (resp.error) {
-            return resp.error.message;
+        const { data, error } = await query; // Executa a consulta
+
+        if (error) {
+            return error.message;
         }
-        return resp.data;
+        return data;
+        
     } catch (error) {
         return exceptionHandler(error);
     }
-}
+};
 
 const salvarEmprestimo = async (emprestimo: any) => {
     try {
@@ -48,7 +61,7 @@ const salvarEmprestimo = async (emprestimo: any) => {
     } catch (error) {
         return error;
     }
-}
+};
 
 const finalizarEmprestimo = async (id: number) =>{
     
@@ -66,7 +79,7 @@ const finalizarEmprestimo = async (id: number) =>{
     } catch (error) {
         return exceptionHandler(error);
     }
-}
+};
 
 
 

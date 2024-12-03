@@ -39,7 +39,7 @@ const Livros = () => {
 
   // colunas exibidas na lista
   const columns: any = [
-    { field: "id", headerName: "ID", flex: 0.5 },
+    // { field: "id", headerName: "ID", flex: 0.5 },
     {
       field: "titulo",
       headerName: "Título",
@@ -280,7 +280,7 @@ const Livros = () => {
       {/*  */}
 
       {/* Lista */}
-      <Box m="40px 0 0 0" height="75vh">
+      <Box m="40px 0 0 0" minHeight="75vh">
         <DataGrid
           rows={livros}
           columns={columns}
@@ -302,6 +302,7 @@ const Livros = () => {
         />
       </Box>
       {/*  */}
+
       <Modal
         open={open}
         onClose={() => setOpen(false)}

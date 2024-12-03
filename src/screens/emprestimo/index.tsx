@@ -5,33 +5,31 @@ import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { localizedTextsMap } from "../../utils/localeTextTable";
-
 import {
   Box,
   Button,
-  DialogContent,
-  useMediaQuery,
   Dialog,
-  DialogTitle,
-  DialogActions,
-  DialogContentText,
-  IconButton,
-  Accordion,
-  AccordionSummary,
-  Typography,
-  AccordionDetails,
   Divider,
-  TextField,
-  FormControlLabel,
   Checkbox,
+  Accordion,
+  TextField,
+  IconButton,
+  Typography,
+  DialogTitle,
+  useMediaQuery,
+  DialogActions,
+  DialogContent,
+  AccordionSummary,
+  AccordionDetails,
+  FormControlLabel,
+  DialogContentText,
 } from "@mui/material";
-
+import moment from "moment";
+import { useForm } from "react-hook-form";
 import { DataGrid } from "@mui/x-data-grid";
 import { CheckCircle, Close } from "@mui/icons-material";
-import CustomToolbar from "../../components/CustomMui/CustomToolbar";
 import EmprestimoService from "../../services/EmprestimoService";
-import { useForm } from "react-hook-form";
-import moment from "moment";
+import CustomToolbar from "../../components/CustomMui/CustomToolbar";
 
 const Emprestimos = () => {
   const { register, handleSubmit } = useForm();
@@ -63,7 +61,7 @@ const Emprestimos = () => {
       flex: 1,
       cellClassName: "emprestimo-column--cell",
       valueFormatter: (params: any) => {
-        return moment(params.value).format("DD/MM/YYYY");
+        return params ? moment(params.value).format("DD/MM/YYYY") : "";
       },
     },
     {
@@ -72,7 +70,7 @@ const Emprestimos = () => {
       flex: 1,
       cellClassName: "devolucao-column--cell",
       valueFormatter: (params: any) => {
-        return moment(params.value).format("DD/MM/YYYY");
+        return params ? moment(params.value).format("DD/MM/YYYY") : "";
       },
     },
     {
