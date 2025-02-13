@@ -1,14 +1,29 @@
 import { useContext, useState } from "react";
-import InputBase from "@mui/material/InputBase";
-import { Box, IconButton, Avatar, Menu, MenuItem } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
 import AuthContext from "../../context/auth";
-import { checkDevice } from "../../utils/checkDevice";
-import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate } from "react-router-dom";
+import MenuIcon from "@mui/icons-material/Menu";
+import InputBase from "@mui/material/InputBase";
+import SearchIcon from "@mui/icons-material/Search";
+import { checkDevice } from "../../utils/checkDevice";
+import {
+  Box,
+  Menu,
+  Avatar,
+  MenuItem,
+  useTheme,
+  IconButton,
+} from "@mui/material";
+import {
+  DarkModeOutlined,
+  LightModeOutlined,
+  NotificationsOutlined,
+} from "@mui/icons-material";
+import { ColorModeContext } from "../../theme";
 
 const Topbar = () => {
+  const theme = useTheme();
   const navigate = useNavigate();
+  const colorMode = useContext(ColorModeContext);
   const { user, signOutClearAll } = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -35,6 +50,21 @@ const Topbar = () => {
         justifyContent={"flex-end"}
         sx={{ ml: 5, flex: 1 }}
       >
+        <IconButton onClick={colorMode.toggleColorMode}>
+          {theme.palette.mode === "dark" ? (
+            <DarkModeOutlined />
+          ) : (
+            <LightModeOutlined />
+          )}
+        </IconButton>
+
+        <IconButton>
+          <NotificationsOutlined
+            onClick={() => {
+              console.log(user);
+            }}
+          />
+        </IconButton>
         <IconButton>
           <Avatar sx={{ bgcolor: "#6b6b6b" }}>
             {user.nome.substring(0, 1).toUpperCase()}
