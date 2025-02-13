@@ -1,16 +1,16 @@
-import { useState, useContext } from "react";
-import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
-import { useNavigate } from "react-router-dom";
-import MenuBookIcon from "@mui/icons-material/MenuBook";
-import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
-import { Box, Typography } from "@mui/material";
 import logo from "../../assets/logocg.webp";
-import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
+import { useState, useContext } from "react";
+import AuthContext from "../../context/auth";
+import { useNavigate } from "react-router-dom";
+import { Box, Typography } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { checkDevice } from "../../utils/checkDevice";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
 import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import { checkDevice } from "../../utils/checkDevice";
-import AuthContext from "../../context/auth";
+import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
+import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
+import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 
 const SidebarCustom = () => {
   const navigate = useNavigate();
@@ -47,18 +47,13 @@ const SidebarCustom = () => {
   };
 
   return (
-    <Box
-      sx={{
-        backgroundColor: "#FAFAFA",
-      }}
-      display={checkDevice() === true ? "none" : "block"}
-    >
+    <Box display={checkDevice() === true ? "none" : "block"}>
       <Sidebar collapsed={isCollapsed}>
         <Menu>
           <MenuItem
             onClick={() => setIsCollapsed(!isCollapsed)}
             style={{
-              margin: "10px 0 20px 0",
+              margin: "10px 0 0 0",
             }}
           >
             <Box display="flex" sx={{ gap: 3 }} alignItems="center" ml="10px">
@@ -69,10 +64,7 @@ const SidebarCustom = () => {
             </Box>
           </MenuItem>
 
-          <Box
-            style={{ borderTop: "1px solid lightgray", marginTop: 28 }}
-            paddingLeft={isCollapsed ? undefined : "10%"}
-          >
+          <Box style={{ borderTop: "1px solid lightgray", marginTop: 28 }}>
             <Item
               title="Dashboard"
               to="/dashboard"

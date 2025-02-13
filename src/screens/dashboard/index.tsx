@@ -121,7 +121,7 @@ const Dashboard = () => {
             borderBottom={`1px solid #fb7f63`}
             marginBottom={`22px`}
             p="15px"
-            sx={{ backgroundColor: "lightgray" }}
+            sx={{ backgroundColor: "neutral.dark" }}
           >
             <Box flex={1}>
               <Avatar sx={{ bgcolor: "#fb7f63" }}>CH</Avatar>
@@ -149,7 +149,7 @@ const Dashboard = () => {
             borderBottom={`1px solid #fb7f63`}
             marginBottom={`22px`}
             p="15px"
-            sx={{ backgroundColor: "lightgray" }}
+            sx={{ backgroundColor: "neutral.dark" }}
           >
             <Box flex={1}>
               <Avatar sx={{ bgcolor: "#fb7f63" }}>JP</Avatar>
@@ -179,7 +179,7 @@ const Dashboard = () => {
             borderBottom={`1px solid #fb7f63`}
             marginBottom={`22px`}
             p="15px"
-            sx={{ backgroundColor: "lightgray" }}
+            sx={{ backgroundColor: "neutral.dark" }}
           >
             <Box flex={1}>
               <Avatar sx={{ bgcolor: "#fb7f63" }}>JS</Avatar>
@@ -209,7 +209,7 @@ const Dashboard = () => {
             borderBottom={`1px solid #fb7f63`}
             marginBottom={`22px`}
             p="15px"
-            sx={{ backgroundColor: "lightgray" }}
+            sx={{ backgroundColor: "neutral.dark" }}
           >
             <Box flex={1}>
               <Avatar sx={{ bgcolor: "#fb7f63" }}>ML</Avatar>

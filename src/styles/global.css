@@ -42,6 +42,10 @@ body,
   margin-top: -30px;
 }
 
+.css-dip3t8 {
+  background-color: rgb(0, 0, 0, 0.0) !important;
+}
+
 @media only screen and (max-width: 500px){ 
 
   .imgCalendar{
