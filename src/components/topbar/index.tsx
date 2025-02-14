@@ -1,4 +1,5 @@
-import { useContext, useState } from "react";
+/* eslint-disable react-refresh/only-export-components */
+import { memo, useContext, useEffect, useState } from "react";
 import AuthContext from "../../context/auth";
 import { useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -8,10 +9,12 @@ import { checkDevice } from "../../utils/checkDevice";
 import {
   Box,
   Menu,
+  Badge,
   Avatar,
   MenuItem,
   useTheme,
   IconButton,
+  Typography,
 } from "@mui/material";
 import {
   DarkModeOutlined,
@@ -19,20 +22,48 @@ import {
   NotificationsOutlined,
 } from "@mui/icons-material";
 import { ColorModeContext } from "../../theme";
+import EmprestimoService from "../../services/EmprestimoService";
 
 const Topbar = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const colorMode = useContext(ColorModeContext);
+  const [notificacoes, setNotificacoes] = useState([]);
   const { user, signOutClearAll } = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [anchorEl2, setAnchorEl2] = useState<null | HTMLElement>(null);
+
   const open = Boolean(anchorEl);
+  const open2 = Boolean(anchorEl2);
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
+  const handleClick2 = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl2(event.currentTarget);
+  };
+
   const handleClose = () => {
     setAnchorEl(null);
+    setAnchorEl2(null);
   };
+
+  const getNotificacoes = async () => {
+    EmprestimoService.listarEmprestimosVencendo()
+      .then((resp) => {
+        setNotificacoes(resp);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  useEffect(() => {
+    if (user.tipoUsuario == "master") {
+      getNotificacoes();
+    }
+  }, []);
 
   return (
     <Box display="flex" justifyContent="space-between" p={2}>
@@ -50,6 +81,37 @@ const Topbar = () => {
         justifyContent={"flex-end"}
         sx={{ ml: 5, flex: 1 }}
       >
+        <IconButton>
+          <Badge badgeContent={notificacoes.length} color="error">
+            <NotificationsOutlined onClick={(e: any) => handleClick2(e)} />
+          </Badge>
+        </IconButton>
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl2}
+          open={open2}
+          onClose={handleClose}
+          MenuListProps={{
+            "aria-labelledby": "menu",
+          }}
+        >
+          {notificacoes.length > 0 ? (
+            notificacoes.map((element: any) => (
+              <MenuItem
+                sx={{ color: "red" }}
+                key={element.nome}
+                onClick={() => {}}
+              >
+                {element.titulo}
+              </MenuItem>
+            ))
+          ) : (
+            <Typography sx={{ padding: 1 }} color="#ADADAD" fontSize={16}>
+              Não há notificações no momento
+            </Typography>
+          )}
+        </Menu>
+
         <IconButton onClick={colorMode.toggleColorMode}>
           {theme.palette.mode === "dark" ? (
             <DarkModeOutlined />
@@ -58,13 +120,6 @@ const Topbar = () => {
           )}
         </IconButton>
 
-        <IconButton>
-          <NotificationsOutlined
-            onClick={() => {
-              console.log(user);
-            }}
-          />
-        </IconButton>
         <IconButton>
           <Avatar sx={{ bgcolor: "#6b6b6b" }}>
             {user.nome.substring(0, 1).toUpperCase()}
@@ -142,4 +197,4 @@ const Topbar = () => {
   );
 };
 
-export default Topbar;
+export default memo(Topbar);

@@ -42,6 +42,24 @@ const listarEmprestimos = async (filters: any) => {
     }
 };
 
+const listarEmprestimosVencendo = async () => {
+    try {
+
+        const { data, error } = await supabase
+        .from('emprestimos_vencendo')
+        .select("*");
+
+        if (error) {
+            return error.message;
+        }
+
+        return data;
+        
+    } catch (error) {
+        return exceptionHandler(error);
+    }
+};
+
 const salvarEmprestimo = async (emprestimo: any) => {
     try {
         const { error, status } = await supabase
@@ -86,5 +104,6 @@ const finalizarEmprestimo = async (id: number) =>{
 export default {
     salvarEmprestimo,
     listarEmprestimos,
-    finalizarEmprestimo
+    finalizarEmprestimo,
+    listarEmprestimosVencendo
 }
