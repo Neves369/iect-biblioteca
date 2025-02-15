@@ -53,7 +53,6 @@ const Topbar = () => {
   const getNotificacoes = async () => {
     EmprestimoService.listarEmprestimosVencendo(user)
       .then((resp) => {
-        console.log("resp: ", resp);
         setNotificacoes(resp);
       })
       .catch((e) => {

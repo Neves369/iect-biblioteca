@@ -70,7 +70,6 @@ const Emprestimos = () => {
       flex: 1,
       cellClassName: "previsao-column--cell",
       valueFormatter: (params: any) => {
-        console.log("aqui: ", params);
         return params ? moment(params).format("DD/MM/YYYY") : "";
       },
     },
@@ -109,7 +108,6 @@ const Emprestimos = () => {
 
     EmprestimoService.listarEmprestimos(values)
       .then((resp) => {
-        console.log(resp);
         setEmprestimos(resp);
       })
       .catch((e) => {
