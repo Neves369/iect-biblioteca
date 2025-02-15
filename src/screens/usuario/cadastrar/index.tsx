@@ -84,7 +84,6 @@ const CadastrarUsuario = () => {
 
     UsuarioService.editarUsuario(state.id, values)
       .then((resp: any) => {
-        console.log("teste: ", resp);
         if (resp == "204") {
           window.alert("Usuário Editado com sucesso!");
           setTimeout(() => {

@@ -77,7 +77,6 @@ const listarEmprestimosVencendo = async (user: any) => {
 };
 
 const salvarEmprestimo = async (emprestimo: any) => {
-    // console.log(emprestimo)
     try {
         const { error, status } = await supabase
         .from('emprestimo')
