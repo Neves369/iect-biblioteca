@@ -23,6 +23,7 @@ import {
 } from "@mui/icons-material";
 import { ColorModeContext } from "../../theme";
 import EmprestimoService from "../../services/EmprestimoService";
+import moment from "moment";
 
 const Topbar = () => {
   const theme = useTheme();
@@ -50,8 +51,9 @@ const Topbar = () => {
   };
 
   const getNotificacoes = async () => {
-    EmprestimoService.listarEmprestimosVencendo()
+    EmprestimoService.listarEmprestimosVencendo(user)
       .then((resp) => {
+        console.log("resp: ", resp);
         setNotificacoes(resp);
       })
       .catch((e) => {
@@ -60,9 +62,7 @@ const Topbar = () => {
   };
 
   useEffect(() => {
-    if (user.tipoUsuario == "master") {
-      getNotificacoes();
-    }
+    getNotificacoes();
   }, []);
 
   return (
@@ -99,10 +99,18 @@ const Topbar = () => {
             notificacoes.map((element: any) => (
               <MenuItem
                 sx={{ color: "red" }}
-                key={element.nome}
+                key={element.id}
                 onClick={() => {}}
               >
-                {element.titulo}
+                {user.tipoUsuario == "master"
+                  ? `${element.usuario_nome} - ${
+                      element.livro_titulo
+                    } vence em ${moment(element.previsao_devolucao).format(
+                      "DD/MM/YYYY"
+                    )}.`
+                  : `Atenção, seu empréstimo vence em ${moment(
+                      element.previsao_devolucao
+                    ).format("DD/MM/YYYY")}`}
               </MenuItem>
             ))
           ) : (

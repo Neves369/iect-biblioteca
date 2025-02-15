@@ -42,18 +42,34 @@ const listarEmprestimos = async (filters: any) => {
     }
 };
 
-const listarEmprestimosVencendo = async () => {
+const listarEmprestimosVencendo = async (user: any) => {
     try {
 
-        const { data, error } = await supabase
-        .from('emprestimos_vencendo')
-        .select("*");
+        if(user.tipoUsuario == "master"){
+            const { data, error } = await supabase
+            .from('emprestimos_vencendo')
+            .select("*");
+            
+            if (error) {
+                return error.message;
+            }
 
-        if (error) {
-            return error.message;
+            return data;
+        }
+        else{
+            const { data, error } = await supabase
+            .from('emprestimos_vencendo')
+            .select("*")
+            .eq('usuario_nome',  user.nome);
+            
+            if (error) {
+                return error.message;
+            }
+
+            return data;
         }
 
-        return data;
+
         
     } catch (error) {
         return exceptionHandler(error);
@@ -61,12 +77,14 @@ const listarEmprestimosVencendo = async () => {
 };
 
 const salvarEmprestimo = async (emprestimo: any) => {
+    // console.log(emprestimo)
     try {
         const { error, status } = await supabase
         .from('emprestimo')
         .insert({ 
             usuario_id: emprestimo.usuario_id, 
-            livro_id: emprestimo.livro_id
+            livro_id: emprestimo.livro_id,
+            previsao_devolucao: moment().add(emprestimo.prazoEmprestimo, 'days').toISOString()
         });
 
         if (error) {
