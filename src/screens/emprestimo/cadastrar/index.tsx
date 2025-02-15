@@ -27,6 +27,21 @@ const CadastrarEmprestimo = () => {
     formState: { errors },
   } = useForm();
 
+  const prazos = [
+    {
+      value: "3",
+      label: "3 Dias",
+    },
+    {
+      value: "15",
+      label: "15 Dias",
+    },
+    {
+      value: "30",
+      label: "30 Dias",
+    },
+  ];
+
   const livroSelecionado: any = livros.find(
     (livro: any) => livro.id === watch("livro_id")
   );
@@ -162,6 +177,27 @@ const CadastrarEmprestimo = () => {
               {usuarios.map((option: any) => (
                 <MenuItem key={option.id} value={option.id}>
                   {option.nome}
+                </MenuItem>
+              ))}
+            </TextField>
+
+            <TextField
+              fullWidth
+              variant="filled"
+              select
+              defaultValue="15 days"
+              InputLabelProps={{ shrink: true }}
+              label="Prazo Empréstimo"
+              {...register("prazoEmprestimo", {
+                required: true,
+              })}
+              error={!!errors.prazoEmprestimo}
+              helperText={errors.prazoEmprestimo ? "Prazo é obrigatório" : ""}
+              sx={{ gridColumn: "span 4" }}
+            >
+              {prazos.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
                 </MenuItem>
               ))}
             </TextField>

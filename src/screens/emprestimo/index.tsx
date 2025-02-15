@@ -61,7 +61,17 @@ const Emprestimos = () => {
       flex: 1,
       cellClassName: "emprestimo-column--cell",
       valueFormatter: (params: any) => {
-        return params ? moment(params.value).format("DD/MM/YYYY") : "";
+        return params ? moment(params).format("DD/MM/YYYY") : "";
+      },
+    },
+    {
+      field: "previsao_devolucao",
+      headerName: "Prazo",
+      flex: 1,
+      cellClassName: "previsao-column--cell",
+      valueFormatter: (params: any) => {
+        console.log("aqui: ", params);
+        return params ? moment(params).format("DD/MM/YYYY") : "";
       },
     },
     {
@@ -70,7 +80,7 @@ const Emprestimos = () => {
       flex: 1,
       cellClassName: "devolucao-column--cell",
       valueFormatter: (params: any) => {
-        return params ? moment(params.value).format("DD/MM/YYYY") : "";
+        return params ? moment(params).format("DD/MM/YYYY") : "";
       },
     },
     {
@@ -99,6 +109,7 @@ const Emprestimos = () => {
 
     EmprestimoService.listarEmprestimos(values)
       .then((resp) => {
+        console.log(resp);
         setEmprestimos(resp);
       })
       .catch((e) => {
@@ -324,6 +335,7 @@ const Emprestimos = () => {
               columnVisibilityModel: {
                 id: isNonMobile,
                 data_emprestimo: isNonMobile,
+                previsao_devolucao: isNonMobile,
                 data_devolucao: isNonMobile,
               },
             },
