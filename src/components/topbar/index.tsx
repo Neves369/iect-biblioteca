@@ -192,6 +192,14 @@ const Topbar = () => {
 
             <MenuItem
               onClick={() => {
+                navigate("/contate-nos"), handleClose();
+              }}
+            >
+              Contate-nos
+            </MenuItem>
+
+            <MenuItem
+              onClick={() => {
                 signOutClearAll(), navigate("/"), handleClose();
               }}
             >
