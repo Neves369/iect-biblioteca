@@ -101,7 +101,7 @@ const Emprestimos = () => {
     },
   ];
 
-  // Pesquisar Produtos
+  // Pesquisar Empréstimos
   const pesquisar = (values: any) => {
     setLoading(true);
     setSavedFilters(values);
@@ -331,7 +331,7 @@ const Emprestimos = () => {
           initialState={{
             columns: {
               columnVisibilityModel: {
-                id: isNonMobile,
+                emprestimo_id: isNonMobile,
                 data_emprestimo: isNonMobile,
                 previsao_devolucao: isNonMobile,
                 data_devolucao: isNonMobile,

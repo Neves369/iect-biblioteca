@@ -54,55 +54,121 @@ const listarLivrosDisponiveis = async () => {
     }
 };
 
-const salvarLivro = async (livro: any) => {
+const salvarLivro = async (livro: any, quantidade: number) => {
     try {
-        const { error, status } = await supabase
-        .from('livro')
-        .insert({ 
-            titulo: livro.titulo, 
-            autor: livro.autor,  
-            ano_publicacao: livro.ano_publicacao,
-            descricao: livro.descricao,
-            tags: livro.tags,
-            capa: livro.capa
-        });
+        const { data , error: livroError } = await supabase
+            .from('livro')
+            .insert({ 
+                titulo: livro.titulo, 
+                autor: livro.autor,  
+                ano_publicacao: livro.ano_publicacao,
+                descricao: livro.descricao,
+                tags: livro.tags,
+                capa: livro.capa,
+                quantidade: quantidade 
+            }).select('id') 
 
-        if (error) {
-            return error.message;
+        if (livroError) {
+            return livroError.message;
         }
 
+
+        // Inserir os exemplares na tabela exemplar
+        const exemplares = Array.from({ length: quantidade }, () => ({
+            livro_id: data[0].id,  // Associa os exemplares ao livro recém-criado
+            status: 'disponível',     // Todos os exemplares começam como disponíveis
+        }));
+
+        const { status, error: exemplaresError } = await supabase
+            .from('exemplar')
+            .insert(exemplares);
+
+        if (exemplaresError) {
+            return exemplaresError.message;
+        }
+
+        // Se tudo correr bem, retornamos o status de sucesso
         return status;
-        
-          
-    } catch (error) {
-        return error;
+
+    } catch (error: any) {
+        return error.message || 'Ocorreu um erro inesperado.';
     }
 };
 
-const editarLivro = async (livro: any, id: any) => {
+const editarLivro = async (livro: any, id: any, novaQuantidade: number) => {
     try {
-        const { error, status } = await supabase
-        .from('livro')
-        .update({ 
-            titulo: livro.titulo, 
-            autor: livro.autor,  
-            ano_publicacao: livro.ano_publicacao,
-            descricao: livro.descricao,
-            tags: livro.tags,
-            capa: livro.capa
-        }).eq('id',  id);
+        // Atualiza o livro na tabela livro
+        const { error: livroError } = await supabase
+            .from('livro')
+            .update({ 
+                titulo: livro.titulo, 
+                autor: livro.autor,  
+                ano_publicacao: livro.ano_publicacao,
+                descricao: livro.descricao,
+                tags: livro.tags,
+                capa: livro.capa,
+                quantidade: novaQuantidade
+            })
+            .eq('id', id);
 
-        if (error) {
-            return error.message;
+        if (livroError) {
+            return livroError.message;
         }
 
-        return status;
-        
-          
-    } catch (error) {
-        return error;
+        // Pega a quantidade atual de exemplares do livro
+        const { data: exemplaresAtuais, error: exemplaresError } = await supabase
+            .from('exemplar')
+            .select('*')
+            .eq('livro_id', id);
+
+        if (exemplaresError) {
+            return exemplaresError.message;
+        }
+
+        const quantidadeAtual = exemplaresAtuais.length;
+
+        // Se a nova quantidade for maior que a quantidade atual, criamos novos exemplares
+        if (novaQuantidade > quantidadeAtual) {
+            const exemplaresParaAdicionar = Array.from({ length: novaQuantidade - quantidadeAtual }, () => ({
+                livro_id: id,
+                status: 'disponível'
+            }));
+
+            const { error: erroCriacaoExemplares } = await supabase
+                .from('exemplar')
+                .insert(exemplaresParaAdicionar);
+
+            if (erroCriacaoExemplares) {
+                return erroCriacaoExemplares.message;
+            }
+        }
+
+        // Se a nova quantidade for menor que a quantidade atual, removemos exemplares
+        if (novaQuantidade < quantidadeAtual) {
+
+            // Filtramos apenas os exemplares disponíveis
+            const exemplaresDisponiveis = exemplaresAtuais.filter(exemplar => exemplar.status === 'disponível');
+
+            // Selecionamos os exemplares a serem removidos (somente os disponíveis)
+            const exemplaresParaRemover = exemplaresDisponiveis.slice(novaQuantidade);
+
+            const { error: erroRemocaoExemplares } = await supabase
+                .from('exemplar')
+                .delete()
+                .in('id', exemplaresParaRemover.map(exemplar => exemplar.id));
+
+            if (erroRemocaoExemplares) {
+                return erroRemocaoExemplares.message;
+            }
+        }
+
+        return `204`; // Retorna o status de sucesso
+
+    } catch (error: any) {
+        return error.message || 'Erro desconhecido ao editar o livro';
     }
 };
+
 
 
 export default {
