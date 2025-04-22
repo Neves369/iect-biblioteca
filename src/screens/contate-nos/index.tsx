@@ -25,17 +25,12 @@ const Contato = () => {
   const salvar = async (values: any) => {
     setLoading(true);
     try {
-      const { data, error } = await supabase.functions.invoke(
-        "super-processor",
-        {
-          body: JSON.stringify({
-            sugestao: values.descricao,
-            assunto: values.assunto,
-          }),
-        }
-      );
-
-      console.log("data aqui: ", data);
+      const { error } = await supabase.functions.invoke("super-processor", {
+        body: {
+          sugestao: values.descricao,
+          assunto: values.assunto,
+        },
+      });
 
       if (error) {
         console.log("error aqui: ", error);
