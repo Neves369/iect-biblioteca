@@ -3,6 +3,7 @@ import { useState, useContext } from "react";
 import AuthContext from "../../context/auth";
 import { useNavigate } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
+import EmailIcon from "@mui/icons-material/Email";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { checkDevice } from "../../utils/checkDevice";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
@@ -100,6 +101,14 @@ const SidebarCustom = () => {
                 setSelected={setSelected}
               />
             )}
+
+            <Item
+              title="Contate-nos"
+              to="/contate-nos"
+              icon={<EmailIcon fontSize="medium" />}
+              selected={selected}
+              setSelected={setSelected}
+            />
           </Box>
         </Menu>
 

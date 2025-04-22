@@ -1,19 +1,20 @@
 import { useContext } from "react";
-import Dashboard from "../screens/dashboard";
-import { Routes, Route, Navigate } from "react-router-dom";
-import { CssBaseline, ThemeProvider, Divider } from "@mui/material";
-import { ColorModeContext, useMode } from "../theme";
-import Topbar from "../components/topbar";
-import Sidebar from "../components/sidebar";
-import Usuarios from "../screens/usuario";
-import CadastrarUsuario from "../screens/usuario/cadastrar";
-import AuthContext from "../context/auth";
 import Login from "../screens/login";
 import Livros from "../screens/livro";
+import Topbar from "../components/topbar";
+import Usuarios from "../screens/usuario";
+import AuthContext from "../context/auth";
 import Cadastro from "../screens/cadastro";
+import Sidebar from "../components/sidebar";
+import Contato from "../screens/contate-nos";
+import Dashboard from "../screens/dashboard";
 import Emprestimos from "../screens/emprestimo";
+import { ColorModeContext, useMode } from "../theme";
 import CadastrarLivro from "../screens/livro/cadastrar";
+import { Routes, Route, Navigate } from "react-router-dom";
+import CadastrarUsuario from "../screens/usuario/cadastrar";
 import CadastrarEmprestimo from "../screens/emprestimo/cadastrar";
+import { CssBaseline, ThemeProvider, Divider } from "@mui/material";
 
 function RoutesController() {
   const [theme, colorMode] = useMode();
@@ -40,6 +41,7 @@ function RoutesController() {
             <Routes>
               {signed && <Route path="/dashboard" element={<Dashboard />} />}
               {signed && <Route path="/livros" element={<Livros />} />}
+              {signed && <Route path="/contate-nos" element={<Contato />} />}
               {signed && (
                 <Route
                   path="/usuarios"

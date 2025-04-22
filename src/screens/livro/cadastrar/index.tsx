@@ -4,12 +4,12 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   Box,
-  TextField,
   Tabs,
   Tab,
   Button,
-  CircularProgress,
+  TextField,
   Autocomplete,
+  CircularProgress,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import LivroService from "../../../services/LivroService";
@@ -40,12 +40,13 @@ const CadastrarLivro = () => {
 
   useEffect(() => {
     if (state) {
-      setValue("titulo", state.titulo);
-      setValue("autor", state.autor);
-      setValue("ano_publicacao", state.ano_publicacao);
-      setValue("descricao", state.descricao);
-      setValue("capa", state.capa);
       setTags(state.tags);
+      setValue("capa", state.capa);
+      setValue("autor", state.autor);
+      setValue("titulo", state.titulo);
+      setValue("descricao", state.descricao);
+      setValue("quantidade", state.quantidade);
+      setValue("ano_publicacao", state.ano_publicacao);
     }
   }, [setValue, state]);
 
@@ -54,7 +55,7 @@ const CadastrarLivro = () => {
 
     values.tags = tags;
 
-    LivroService.salvarLivro(values)
+    LivroService.salvarLivro(values, values.quantidade)
       .then((resp: any) => {
         if (resp == "201") {
           window.alert("Livro cadastrado com sucesso!");
@@ -78,7 +79,7 @@ const CadastrarLivro = () => {
 
     values.tags = tags;
 
-    LivroService.editarLivro(values, state.id)
+    LivroService.editarLivro(values, state.id, values.quantidade)
       .then((resp: any) => {
         if (resp == "204") {
           window.alert("Livro editado com sucesso!");
@@ -184,7 +185,21 @@ const CadastrarLivro = () => {
               type="text"
               label="Link da Capa"
               {...register("capa")}
-              sx={{ gridColumn: "span 4" }}
+              sx={{ gridColumn: "span 2" }}
+            />
+
+            <TextField
+              fullWidth
+              defaultValue={1}
+              variant="outlined"
+              type="number"
+              label="Quantidade"
+              {...register("quantidade", {
+                required: true,
+              })}
+              error={!!errors.quantidade}
+              helperText={errors.quantidade ? "uantidade é obrigatória" : ""}
+              sx={{ gridColumn: "span 2" }}
             />
 
             <TextField

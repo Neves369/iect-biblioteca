@@ -94,8 +94,8 @@ const Topbar = () => {
             "aria-labelledby": "menu",
           }}
         >
-          {notificacoes.length > 0 ? (
-            notificacoes.map((element: any) => (
+          {notificacoes?.length > 0 ? (
+            notificacoes?.map((element: any) => (
               <MenuItem
                 sx={{ color: "red" }}
                 key={element.id}
@@ -189,6 +189,14 @@ const Topbar = () => {
                 Usuários
               </MenuItem>
             )}
+
+            <MenuItem
+              onClick={() => {
+                navigate("/contate-nos"), handleClose();
+              }}
+            >
+              Contate-nos
+            </MenuItem>
 
             <MenuItem
               onClick={() => {
