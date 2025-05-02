@@ -9,6 +9,7 @@ import { checkDevice } from "../../utils/checkDevice";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import RateReviewIcon from "@mui/icons-material/RateReview";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
@@ -101,6 +102,14 @@ const SidebarCustom = () => {
                 setSelected={setSelected}
               />
             )}
+
+            <Item
+              title="Análises"
+              to="/analises"
+              icon={<RateReviewIcon fontSize="medium" />}
+              selected={selected}
+              setSelected={setSelected}
+            />
 
             <Item
               title="Contate-nos"
