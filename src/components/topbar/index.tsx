@@ -192,6 +192,14 @@ const Topbar = () => {
 
             <MenuItem
               onClick={() => {
+                navigate("/analises"), handleClose();
+              }}
+            >
+              Análises
+            </MenuItem>
+
+            <MenuItem
+              onClick={() => {
                 navigate("/contate-nos"), handleClose();
               }}
             >

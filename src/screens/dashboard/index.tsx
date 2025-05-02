@@ -4,9 +4,10 @@ import AuthContext from "../../context/auth";
 import calendar from "../../assets/calendar.webp";
 import bkWelcome from "../../assets/bkWelcome.webp";
 import { checkDevice } from "../../utils/checkDevice";
+import { DownloadOutlined } from "@mui/icons-material";
+// import Calendar from "../../components/calendar/calendar";
 import { Avatar, Box, Button, Typography } from "@mui/material";
 import YouTubeEmbed from "../../components/video/apresentacao";
-import { DownloadOutlined } from "@mui/icons-material";
 
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
@@ -43,6 +44,7 @@ const Dashboard = () => {
 
       <Box
         display="grid"
+        paddingBottom={10}
         gridTemplateColumns="repeat(12, 1fr)"
         gridAutoRows={checkDevice() === true ? "120px" : "140px"}
         gap="20px"
@@ -50,7 +52,7 @@ const Dashboard = () => {
         {/* ROW 1 */}
         <Box
           gridColumn={"span 12"}
-          gridRow="span 1"
+          // gridRow="span 1"
           display={"flex"}
           flexDirection={"row"}
           sx={{
@@ -110,7 +112,7 @@ const Dashboard = () => {
         <Box
           sx={{ display: { xs: "block" } }}
           gridColumn={checkDevice() === true ? "span 12" : "span 4"}
-          gridRow="span 2"
+          gridRow="span 3"
           overflow="hide"
         >
           <Box
@@ -231,6 +233,10 @@ const Dashboard = () => {
             </Box>
           </Box>
         </Box>
+        {/*  */}
+
+        {/* ROW 3 */}
+        {/* <Calendar /> */}
         {/*  */}
       </Box>
     </Box>

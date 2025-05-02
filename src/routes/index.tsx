@@ -5,6 +5,7 @@ import Topbar from "../components/topbar";
 import Usuarios from "../screens/usuario";
 import AuthContext from "../context/auth";
 import Cadastro from "../screens/cadastro";
+import Analises from "../screens/analises";
 import Sidebar from "../components/sidebar";
 import Contato from "../screens/contate-nos";
 import Dashboard from "../screens/dashboard";
@@ -15,6 +16,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import CadastrarUsuario from "../screens/usuario/cadastrar";
 import CadastrarEmprestimo from "../screens/emprestimo/cadastrar";
 import { CssBaseline, ThemeProvider, Divider } from "@mui/material";
+import CadastrarAnalise from "../screens/analises/cadastrar";
 
 function RoutesController() {
   const [theme, colorMode] = useMode();
@@ -42,6 +44,7 @@ function RoutesController() {
               {signed && <Route path="/dashboard" element={<Dashboard />} />}
               {signed && <Route path="/livros" element={<Livros />} />}
               {signed && <Route path="/contate-nos" element={<Contato />} />}
+              {signed && <Route path="/analises" element={<Analises />} />}
               {signed && (
                 <Route
                   path="/usuarios"
@@ -71,6 +74,12 @@ function RoutesController() {
                 <Route
                   path="/cadastrar-emprestimo"
                   element={<Private item={<CadastrarEmprestimo />} />}
+                />
+              )}
+              {signed && (
+                <Route
+                  path="/cadastrar-analise"
+                  element={<Private item={<CadastrarAnalise />} />}
                 />
               )}
 

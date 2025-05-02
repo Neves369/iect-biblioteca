@@ -15,9 +15,9 @@ import {
   MenuItem,
   CircularProgress,
 } from "@mui/material";
-import { TabPanel, a11yProps } from "../../../components/tabPanel";
 import { formatTel } from "../../../utils/FormatarTelefone";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { TabPanel, a11yProps } from "../../../components/tabPanel";
 
 const CadastrarUsuario = () => {
   const navigate = useNavigate();

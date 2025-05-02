@@ -74,7 +74,10 @@ const Contato = () => {
 
   return (
     <Box m="20px">
-      <Header title={"Contate-nos"} subtitle={""} />
+      <Header
+        title={"Contate-nos"}
+        subtitle={"Dúvidas ou sugestões? Entre em contato conosco! 📞"}
+      />
 
       <form onSubmit={handleSubmit(salvar)}>
         <Box
