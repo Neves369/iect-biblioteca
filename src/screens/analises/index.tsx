@@ -18,6 +18,7 @@ import {
   useMediaQuery,
   AccordionDetails,
   AccordionSummary,
+  useTheme,
 } from "@mui/material";
 
 import { useForm } from "react-hook-form";
@@ -29,6 +30,7 @@ import CustomToolbar from "../../components/CustomMui/CustomToolbar";
 import PostInput from "../../components/PostInput";
 
 const Analises = () => {
+  const theme = useTheme();
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
@@ -329,7 +331,7 @@ const Analises = () => {
             width: "80%",
             padding: "20px",
             borderRadius: "10px",
-            backgroundColor: "white",
+            backgroundColor: theme.palette.background.paper,
           }}
         >
           <PostInput
