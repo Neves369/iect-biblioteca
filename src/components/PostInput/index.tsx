@@ -40,8 +40,9 @@ const PostInput = ({ text, setText, review }: any) => {
         minRows={4}
         maxRows={20}
         value={text}
-        contentEditable={review}
         variant="outlined"
+        spellCheck={false}
+        contentEditable={review}
         onChange={handleTextChange}
         placeholder="Escreva algo..."
         sx={{
