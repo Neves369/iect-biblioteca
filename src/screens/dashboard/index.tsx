@@ -5,7 +5,6 @@ import calendar from "../../assets/calendar.webp";
 import bkWelcome from "../../assets/bkWelcome.webp";
 import { checkDevice } from "../../utils/checkDevice";
 import { DownloadOutlined } from "@mui/icons-material";
-// import Calendar from "../../components/calendar/calendar";
 import { Avatar, Box, Button, Typography } from "@mui/material";
 import YouTubeEmbed from "../../components/video/apresentacao";
 
