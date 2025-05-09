@@ -173,6 +173,15 @@ const Topbar = () => {
                 Emprestimos
               </MenuItem>
             )}
+            {user.tipoUsuario == "master" && (
+              <MenuItem
+                onClick={() => {
+                  navigate("/calendario"), handleClose();
+                }}
+              >
+                Calendário
+              </MenuItem>
+            )}
             <MenuItem
               onClick={() => {
                 navigate("/livros"), handleClose();

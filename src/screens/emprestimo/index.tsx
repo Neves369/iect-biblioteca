@@ -163,7 +163,10 @@ const Emprestimos = () => {
     <Box m="20px">
       {/* Header */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="Empréstimos" subtitle="" />
+        <Header
+          title="Empréstimos"
+          subtitle="Gerencie os empréstimos de livros de forma prática e eficiente 📚"
+        />
 
         {isNonMobile && (
           <Box>

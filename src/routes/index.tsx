@@ -9,14 +9,15 @@ import Analises from "../screens/analises";
 import Sidebar from "../components/sidebar";
 import Contato from "../screens/contate-nos";
 import Dashboard from "../screens/dashboard";
+import Calendario from "../screens/calendario";
 import Emprestimos from "../screens/emprestimo";
 import { ColorModeContext, useMode } from "../theme";
 import CadastrarLivro from "../screens/livro/cadastrar";
 import { Routes, Route, Navigate } from "react-router-dom";
 import CadastrarUsuario from "../screens/usuario/cadastrar";
+import CadastrarAnalise from "../screens/analises/cadastrar";
 import CadastrarEmprestimo from "../screens/emprestimo/cadastrar";
 import { CssBaseline, ThemeProvider, Divider } from "@mui/material";
-import CadastrarAnalise from "../screens/analises/cadastrar";
 
 function RoutesController() {
   const [theme, colorMode] = useMode();
@@ -45,6 +46,7 @@ function RoutesController() {
               {signed && <Route path="/livros" element={<Livros />} />}
               {signed && <Route path="/contate-nos" element={<Contato />} />}
               {signed && <Route path="/analises" element={<Analises />} />}
+              {signed && <Route path="/calendario" element={<Calendario />} />}
               {signed && (
                 <Route
                   path="/usuarios"

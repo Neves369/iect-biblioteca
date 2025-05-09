@@ -23,8 +23,9 @@ const Calendario = () => {
   };
 
   const getNotificacoes = async () => {
-    EmprestimoService.listarEmprestimosVencendo(user)
+    EmprestimoService.listarEmprestimos({})
       .then((resp) => {
+        console.log("aqui: ", resp);
         setCurrentEvents(resp);
       })
       .catch((e) => {
@@ -34,7 +35,6 @@ const Calendario = () => {
 
   useEffect(() => {
     getNotificacoes();
-    console.log(currentEvents);
   }, []);
 
   return (
@@ -43,7 +43,6 @@ const Calendario = () => {
       display={"flex"}
       gridColumn={"span 12"}
       sx={{
-        // backgroundColor: "red",
         paddingBottom: "20px",
       }}
     >

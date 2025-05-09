@@ -3,7 +3,7 @@ import logo from "../../assets/logocg.webp";
 import AuthContext from "../../context/auth";
 import { useNavigate } from "react-router-dom";
 import background from "../../assets/fundo.webp";
-import React, { useContext, useState } from "react";
+import React, { memo, useContext, useState } from "react";
 import {
   Box,
   Card,
@@ -74,7 +74,7 @@ const Login: React.FC = () => {
           </div>
 
           <Typography color="#ADADAD" fontSize={30}>
-            Bem vindo!
+            Bem-vindo!
           </Typography>
 
           <TextField
@@ -166,4 +166,5 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+const MemoizedLogin = memo(Login);
+export default MemoizedLogin;
