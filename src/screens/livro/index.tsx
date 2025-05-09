@@ -132,7 +132,10 @@ const Livros = () => {
     <Box m="20px">
       {/* Header */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="Livros" subtitle="" />
+        <Header
+          title="Livros"
+          subtitle="Explore o acervo literário da biblioteca 📖"
+        />
 
         {isNonMobile && (
           <Box>

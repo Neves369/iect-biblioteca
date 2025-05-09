@@ -11,6 +11,7 @@ import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import RateReviewIcon from "@mui/icons-material/RateReview";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 
@@ -80,6 +81,16 @@ const SidebarCustom = () => {
                 title="Empréstimos"
                 to="/emprestimos"
                 icon={<SwapHorizIcon fontSize="medium" />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            )}
+
+            {user.tipoUsuario == "master" && (
+              <Item
+                title="Calendário"
+                to="/calendario"
+                icon={<CalendarMonthIcon fontSize="medium" />}
                 selected={selected}
                 setSelected={setSelected}
               />

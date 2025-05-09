@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { memo, useContext } from "react";
 import Header from "../../components/header";
 import AuthContext from "../../context/auth";
 import calendar from "../../assets/calendar.webp";
@@ -234,13 +234,10 @@ const Dashboard = () => {
           </Box>
         </Box>
         {/*  */}
-
-        {/* ROW 3 */}
-        {/* <Calendar /> */}
-        {/*  */}
       </Box>
     </Box>
   );
 };
 
-export default Dashboard;
+const MemoizedDashboard = memo(Dashboard);
+export default MemoizedDashboard;

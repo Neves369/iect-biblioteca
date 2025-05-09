@@ -178,7 +178,10 @@ const Usuarios = () => {
     <Box m="20px">
       {/* Header */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="Usuários" subtitle="" />
+        <Header
+          title="Usuários"
+          subtitle="Gerencie os usuários e suas permissões 👥"
+        />
         {isNonMobile && (
           <Box>
             <Button
