@@ -1,186 +1,202 @@
-// /* eslint-disable @typescript-eslint/no-unused-vars */
-// import React, { useEffect, useState } from "react";
-// import logo from "../../assets/logo192.png";
-// import { useForm } from "react-hook-form";
-// import {
-//   Alert,
-//   AlertColor,
-//   Button,
-//   Card,
-//   CircularProgress,
-//   TextField,
-//   Typography,
-//   Snackbar,
-// } from "@mui/material";
+// import supabase from "../../api/index";
+import { useForm } from "react-hook-form";
+import logo from "../../assets/logocg.webp";
+import AuthContext from "../../context/auth";
+import { useNavigate } from "react-router-dom";
+import background from "../../assets/fundo.webp";
+import React, { memo, useContext, useState } from "react";
+import {
+  Box,
+  Card,
+  Button,
+  TextField,
+  Container,
+  Typography,
+  useMediaQuery,
+  CircularProgress,
+} from "@mui/material";
+import UsuarioService from "../../services/UsuarioService";
 
-// const RecuperarAcesso: React.FC = () => {
-//   const [error] = useState("");
-//   const [showError, setShowError] = useState(false);
-//   const [severity] = useState<AlertColor | undefined>("error");
+const RecuperarAcesso: React.FC = () => {
+  const navigate = useNavigate();
+  const { signIn } = useContext(AuthContext);
+  //   const [message, setMessage] = useState("");
+  const isNonMobile = useMediaQuery("(min-width:600px)");
+  const [submitting, setSubmitting] = useState(false);
 
-//   const {
-//     register,
-//     handleSubmit,
-//     formState: { errors },
-//     watch,
-//   } = useForm();
+  //   const [email, setEmail] = useState("");
+  //   const [message, setMessage] = useState("");
+  //   const [newPassword, setNewPassword] = useState("");
+  //   const [confirmPassword, setConfirmPassword] = useState("");
+  //   const [accessToken, setAccessToken] = useState("");
+  //   const [loading, setLoading] = useState(true);
+  //   const [refreshToken, setRefreshToken] = useState("");
 
-//   const [submitting] = useState(false);
-//   const [setCurrentValues] = useState<any>({
-//     nome: "",
-//     email: "",
-//     senha: "",
-//   });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-//   const onSubmit = (_data: any) => {
-//     // setSubmitting(true);
-//     // recuperar(data.email)
-//     //   .then((resp: any) => {
-//     //     if (resp.status === 200) {
-//     //       return (
-//     //         setSeverity("success"),
-//     //         setError("Email enviado com sucesso!"),
-//     //         setSubmitting(false),
-//     //         setShowError(true)
-//     //       );
-//     //     }
-//     //     if (Math.trunc(resp.response.status / 100) === 4) {
-//     //       return (
-//     //         setSeverity("warning"),
-//     //         setError(resp.response.titulo),
-//     //         setSubmitting(false),
-//     //         setShowError(true)
-//     //       );
-//     //     }
-//     //     if (Math.trunc(resp.response.status / 100) === 5) {
-//     //       return (
-//     //         setSeverity("error"),
-//     //         setError(resp.response.titulo),
-//     //         setSubmitting(false),
-//     //         setShowError(true)
-//     //       );
-//     //     }
-//     //   })
-//     //   .catch((e) => {
-//     //     if (Math.trunc(e.response.status / 100) === 4) {
-//     //       return (
-//     //         setSeverity("warning"),
-//     //         setError(e.response.data.titulo),
-//     //         setSubmitting(false),
-//     //         setShowError(true)
-//     //       );
-//     //     }
-//     //     if (Math.trunc(e.response.status / 100) === 5) {
-//     //       return (
-//     //         setSeverity("error"),
-//     //         setError(e.response.data.titulo),
-//     //         setSubmitting(false),
-//     //         setShowError(true)
-//     //       );
-//     //     }
-//     //   });
-//   };
+  //   useEffect(() => {
+  //     const hash = window.location.hash;
+  //     const params = new URLSearchParams(hash.substring(1));
+  //     const access_token = params.get("access_token") || "";
+  //     const refresh_token = params.get("refresh_token") || "";
+  //     setAccessToken(access_token || "");
+  //     setRefreshToken(refresh_token || "");
 
-//   useEffect(() => {
-//     const subscription = watch((value) => setCurrentValues(value));
-//     return () => subscription.unsubscribe();
-//   }, [setCurrentValues, watch]);
+  //     session(access_token, refresh_token);
+  //   }, []);
 
-//   return (
-//     <div className="containerLogin">
-//       <form onSubmit={handleSubmit(onSubmit)}>
-//         <Card
-//           sx={{
-//             maxWidth: 390,
-//             backgroundColor: "#FBF7F4",
-//             borderRadius: 10,
-//             padding: 5,
-//             textAlign: "center",
-//           }}
-//         >
-//           <div style={{ alignItems: "center", textAlign: "center" }}>
-//             <img style={{ width: 90 }} src={logo} alt="logo" />
-//           </div>
+  //   const session = async (access_token: string, refresh_token: string) => {
+  //     const { error, data } = await supabase.auth.setSession({
+  //       access_token: access_token,
+  //       refresh_token: refresh_token,
+  //     });
+  //     if (error) {
+  //       setMessage(`Erro ao definir sessão: ${error.message}`);
+  //     } else {
+  //       setEmail(data.user?.email || "");
+  //       setLoading(false);
+  //     }
+  //   };
 
-//           <Typography color="#ADADAD" fontSize={30}>
-//             Bem vindo
-//           </Typography>
+  const onSubmit = async (data: any) => {
+    setSubmitting(true);
+    UsuarioService.login(data)
+      .then((resp) => {
+        if (resp.token) {
+          signIn(resp);
+          navigate("/dashboard");
+        } else {
+          window.alert("Não foi possível realizar o login!");
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+      .finally(() => {
+        setSubmitting(false);
+      });
+  };
 
-//           <div
-//             style={{
-//               display: "flex",
-//               justifyContent: "flex-start",
-//               alignItems: "center",
-//               marginTop: 30,
-//             }}
-//           >
-//             <Typography
-//               color="#adadad"
-//               fontSize={14}
-//               style={{ paddingRight: 5 }}
-//             >
-//               Por favor informe seu E-mail. Será enviada uma mensagem com as
-//               informações para recuperação de sua conta.
-//             </Typography>
-//           </div>
-//           <TextField
-//             id="Email-basic"
-//             type="email"
-//             label="E-mail"
-//             variant="standard"
-//             style={{ width: "100%", marginTop: 20 }}
-//             {...register("email", {
-//               required: true,
-//             })}
-//           />
-//           {errors.email && (
-//             <span role="alert" style={{ color: "red", fontSize: 12 }}>
-//               Email é obrigatório
-//             </span>
-//           )}
+  return (
+    <Box
+      sx={{
+        height: "100vh",
+        display: "flex",
+        alignItems: "center",
+        backgroundSize: "cover",
+        justifyContent: "center",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundImage: `url(${background})`,
+      }}
+    >
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Card
+          sx={{
+            maxWidth: isNonMobile ? 390 : 350,
+            backgroundColor: "#FBF7F4",
+            borderRadius: 10,
+            padding: 5,
+            textAlign: "center",
+          }}
+        >
+          <div style={{ alignItems: "center", textAlign: "center" }}>
+            <img style={{ width: 100 }} src={logo} alt="logo" />
+          </div>
 
-//           <Button
-//             type="submit"
-//             style={{ marginTop: 50, width: "100%" }}
-//             variant="contained"
-//           >
-//             {submitting ? <CircularProgress color="info" /> : "Recuperar"}
-//           </Button>
+          <Typography color="#ADADAD" fontSize={30}>
+            Bem-vindo!
+          </Typography>
 
-//           <div
-//             style={{
-//               display: "flex",
-//               justifyContent: "center",
-//               alignItems: "center",
-//               marginTop: 30,
-//             }}
-//           >
-//             <Typography
-//               color="#adadad"
-//               fontSize={14}
-//               style={{ paddingRight: 5 }}
-//             >
-//               Já possui conta?
-//             </Typography>
-//             <a className="linkLogin" href="/login">
-//               Entrar
-//             </a>
-//           </div>
-//         </Card>
-//       </form>
-//       <Snackbar
-//         open={showError}
-//         autoHideDuration={6000}
-//         onClose={() => {
-//           setShowError(false);
-//         }}
-//       >
-//         <Alert severity={severity} sx={{ width: "100%" }}>
-//           {error}
-//         </Alert>
-//       </Snackbar>
-//     </div>
-//   );
-// };
+          <TextField
+            id="Email-basic"
+            type="email"
+            label="E-mail"
+            variant="standard"
+            style={{ width: "100%" }}
+            error={!!errors.email}
+            helperText={errors.email ? "Email é obrigatório" : ""}
+            {...register("email", {
+              required: true,
+            })}
+          />
 
-// export default RecuperarAcesso;
+          <TextField
+            id="Senha-basic"
+            type="password"
+            label="Nova Senha"
+            variant="standard"
+            style={{ width: "100%", marginTop: 20 }}
+            error={!!errors["nova-senha"]}
+            helperText={errors["nova-senha"] ? "Nova Senha é obrigatória" : ""}
+            {...register("nova-senha", {
+              required: true,
+            })}
+          />
+
+          <TextField
+            id="Senha-basic"
+            type="password"
+            label="Confirmar Senha"
+            variant="standard"
+            style={{ width: "100%", marginTop: 20 }}
+            error={!!errors["confirmar-senha"]}
+            helperText={
+              errors["confirmar-senha"] ? "Confirmar Senha é obrigatória" : ""
+            }
+            {...register("confirmar-senha", {
+              required: true,
+            })}
+          />
+
+          <Button
+            type="submit"
+            disabled={submitting}
+            style={{ marginTop: 50, marginBottom: 5, width: "100%" }}
+            variant="contained"
+          >
+            {submitting ? (
+              <CircularProgress size={24} sx={{ color: "white" }} />
+            ) : (
+              "Login"
+            )}
+          </Button>
+          <a
+            className="linkLogin"
+            onClick={() => {
+              navigate("/login");
+            }}
+          >
+            Retornar ao Login
+          </a>
+        </Card>
+      </form>
+      <Box
+        component="footer"
+        sx={{
+          py: 3,
+          px: 2,
+          mt: "auto",
+          bottom: 0,
+          position: "fixed",
+        }}
+      >
+        <Container maxWidth="sm">
+          <Typography
+            sx={{ color: "white", textAlign: "center" }}
+            variant="body1"
+          >
+            2024 - Desenvolvido por Neves369©, todos os direitos reservados.
+          </Typography>
+        </Container>
+      </Box>
+    </Box>
+  );
+};
+
+const MemoizedRecuperarAcesso = memo(RecuperarAcesso);
+export default MemoizedRecuperarAcesso;
