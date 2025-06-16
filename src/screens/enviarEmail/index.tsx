@@ -1,9 +1,7 @@
-import { useForm } from "react-hook-form";
 import logo from "../../assets/logocg.webp";
-import AuthContext from "../../context/auth";
 import { useNavigate } from "react-router-dom";
 import background from "../../assets/fundo.webp";
-import React, { memo, useContext, useState } from "react";
+import React, { memo, useState } from "react";
 import {
   Box,
   Card,
@@ -14,36 +12,29 @@ import {
   useMediaQuery,
   CircularProgress,
 } from "@mui/material";
-import UsuarioService from "../../services/UsuarioService";
+import supabase from "../../api";
 
-const Login: React.FC = () => {
+const EnviarEmailRecuperarAcesso: React.FC = () => {
   const navigate = useNavigate();
-  const { signIn } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
   const isNonMobile = useMediaQuery("(min-width:600px)");
-  const [submitting, setSubmitting] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
 
-  const onSubmit = async (data: any) => {
-    setSubmitting(true);
-    UsuarioService.login(data)
-      .then((resp) => {
-        if (resp.token) {
-          signIn(resp);
-          navigate("/dashboard");
-        } else {
-          window.alert("Não foi possível realizar o login!");
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      })
-      .finally(() => {
-        setSubmitting(false);
-      });
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
+    setLoading(true);
+    e.preventDefault();
+    const { error } = await supabase.auth.resetPasswordForEmail(email);
+    setLoading(false);
+    if (error) {
+      setMessage(`Erro: ${error.message}`);
+    } else {
+      setMessage("Email enviadocom sucesso!");
+      setTimeout(() => {
+        window.location.reload();
+      }, 4000);
+    }
   };
 
   return (
@@ -59,7 +50,7 @@ const Login: React.FC = () => {
         backgroundImage: `url(${background})`,
       }}
     >
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit}>
         <Card
           sx={{
             maxWidth: isNonMobile ? 390 : 350,
@@ -77,69 +68,37 @@ const Login: React.FC = () => {
             Bem-vindo!
           </Typography>
 
+          {message && <p>{message}</p>}
+
           <TextField
             id="Email-basic"
             type="email"
             label="E-mail"
             variant="standard"
             style={{ width: "100%" }}
-            error={!!errors.email}
-            helperText={errors.email ? "Email é obrigatório" : ""}
-            {...register("email", {
-              required: true,
-            })}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
-
-          <TextField
-            id="Senha-basic"
-            type="password"
-            label="Senha"
-            variant="standard"
-            style={{ width: "100%", marginTop: 20 }}
-            error={!!errors.senha}
-            helperText={errors.senha ? "Senha é obrigatória" : ""}
-            {...register("senha", {
-              required: true,
-            })}
-          />
-
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              alignItems: "center",
-              marginTop: 30,
-            }}
-          >
-            <a
-              className="linkLogin"
-              onClick={() => {
-                navigate("/enviar-recuperar-acesso");
-              }}
-            >
-              Esqueci a senha
-            </a>
-          </div>
 
           <Button
+            disabled={loading}
             type="submit"
-            disabled={submitting}
             style={{ marginTop: 50, marginBottom: 5, width: "100%" }}
             variant="contained"
           >
-            {submitting ? (
+            {loading ? (
               <CircularProgress size={24} sx={{ color: "white" }} />
             ) : (
-              "Login"
+              "Enviar E-mail"
             )}
           </Button>
           <a
             className="linkLogin"
             onClick={() => {
-              navigate("/cadastrar");
+              navigate("/login");
             }}
           >
-            Cadastrar-se
+            Retornar ao Login
           </a>
         </Card>
       </form>
@@ -166,5 +125,5 @@ const Login: React.FC = () => {
   );
 };
 
-const MemoizedLogin = memo(Login);
-export default MemoizedLogin;
+const MemoizedEnviarRecuperarAcesso = memo(EnviarEmailRecuperarAcesso);
+export default MemoizedEnviarRecuperarAcesso;
