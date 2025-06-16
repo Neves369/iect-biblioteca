@@ -18,6 +18,7 @@ import CadastrarUsuario from "../screens/usuario/cadastrar";
 import CadastrarAnalise from "../screens/analises/cadastrar";
 import CadastrarEmprestimo from "../screens/emprestimo/cadastrar";
 import { CssBaseline, ThemeProvider, Divider } from "@mui/material";
+import RecuperarAcesso from "../screens/recuperarAcesso";
 
 function RoutesController() {
   const [theme, colorMode] = useMode();
@@ -87,6 +88,7 @@ function RoutesController() {
 
               <Route path="/" element={<Login />} />
               <Route path="/cadastrar" element={<Cadastro />} />
+              <Route path="/recuperar-senha" element={<RecuperarAcesso />} />
             </Routes>
           </main>
         </div>

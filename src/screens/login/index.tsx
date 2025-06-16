@@ -114,7 +114,7 @@ const Login: React.FC = () => {
             <a
               className="linkLogin"
               onClick={() => {
-                navigate("/cadastrar");
+                navigate("/recuperar-senha");
               }}
             >
               Esqueci a senha
