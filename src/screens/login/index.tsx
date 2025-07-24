@@ -3,7 +3,7 @@ import logo from "../../assets/logocg.webp";
 import AuthContext from "../../context/auth";
 import { useNavigate } from "react-router-dom";
 import background from "../../assets/fundo.webp";
-import React, { memo, useContext, useState } from "react";
+import React, { memo, useContext, useEffect, useState } from "react";
 import {
   Box,
   Card,
@@ -45,6 +45,17 @@ const Login: React.FC = () => {
         setSubmitting(false);
       });
   };
+
+  useEffect(() => {
+    const hash = window.location.hash;
+    const params = new URLSearchParams(hash.substring(1));
+    const access_token = params.get("access_token") || "";
+    const refresh_token = params.get("refresh_token") || "";
+
+    if (access_token && refresh_token) {
+      console.log("Tem: ", access_token, refresh_token);
+    }
+  }, []);
 
   return (
     <Box
