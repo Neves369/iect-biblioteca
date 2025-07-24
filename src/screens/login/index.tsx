@@ -53,7 +53,7 @@ const Login: React.FC = () => {
     const refresh_token = params.get("refresh_token") || "";
 
     if (access_token && refresh_token) {
-      navigate("/recuperar-acesso", { state: { access_token, refresh_token } });
+      navigate("/recuperar-senha", { state: { access_token, refresh_token } });
     }
   }, []);
 
