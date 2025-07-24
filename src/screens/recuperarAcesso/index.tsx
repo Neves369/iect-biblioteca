@@ -1,7 +1,7 @@
 import logo from "../../assets/logocg.webp";
-import { useNavigate } from "react-router-dom";
 import background from "../../assets/fundo.webp";
 import React, { memo, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   Box,
   Card,
@@ -16,25 +16,21 @@ import supabase from "../../api";
 
 const RecuperarAcesso: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [accessToken, setAccessToken] = useState("");
   const [loading, setLoading] = useState(true);
+  const [newPassword, setNewPassword] = useState("");
+  const [accessToken, setAccessToken] = useState("");
   const [refreshToken, setRefreshToken] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   useEffect(() => {
-    const hash = window.location.hash;
-    const params = new URLSearchParams(hash.substring(1));
-    const access_token = params.get("access_token") || "";
-    const refresh_token = params.get("refresh_token") || "";
-    setAccessToken(access_token || "");
-    setRefreshToken(refresh_token || "");
-
-    session(access_token, refresh_token);
+    setAccessToken(location.state.access_token || "");
+    setRefreshToken(location.state.refresh_token || "");
+    session(location.state.access_token, location.state.refresh_token);
   }, []);
 
   const session = async (access_token: string, refresh_token: string) => {
@@ -68,7 +64,7 @@ const RecuperarAcesso: React.FC = () => {
     } else {
       setMessage("Senha redefinida com sucesso!");
       setTimeout(() => {
-        window.location.reload();
+        navigate("/");
       }, 4000);
     }
   };
@@ -151,7 +147,7 @@ const RecuperarAcesso: React.FC = () => {
           <a
             className="linkLogin"
             onClick={() => {
-              navigate("/login");
+              navigate("/");
             }}
           >
             Retornar ao Login

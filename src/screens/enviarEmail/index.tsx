@@ -95,7 +95,7 @@ const EnviarEmailRecuperarAcesso: React.FC = () => {
           <a
             className="linkLogin"
             onClick={() => {
-              navigate("/login");
+              navigate("/");
             }}
           >
             Retornar ao Login
