@@ -13,12 +13,12 @@ import Calendario from "../screens/calendario";
 import Emprestimos from "../screens/emprestimo";
 import { ColorModeContext, useMode } from "../theme";
 import CadastrarLivro from "../screens/livro/cadastrar";
+import RecuperarAcesso from "../screens/recuperarAcesso";
 import { Routes, Route, Navigate } from "react-router-dom";
 import CadastrarUsuario from "../screens/usuario/cadastrar";
 import CadastrarAnalise from "../screens/analises/cadastrar";
 import CadastrarEmprestimo from "../screens/emprestimo/cadastrar";
 import { CssBaseline, ThemeProvider, Divider } from "@mui/material";
-import RecuperarAcesso from "../screens/recuperarAcesso";
 import EnviarEmailRecuperarAcesso from "../screens/enviarEmail";
 
 function RoutesController() {
