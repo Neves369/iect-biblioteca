@@ -14,10 +14,12 @@ import {
   IconButton,
   MenuItem,
   CircularProgress,
+  Typography,
 } from "@mui/material";
 import { formatTel } from "../../../utils/FormatarTelefone";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { TabPanel, a11yProps } from "../../../components/tabPanel";
+import supabase from "../../../api";
 
 const CadastrarUsuario = () => {
   const navigate = useNavigate();
@@ -113,6 +115,19 @@ const CadastrarUsuario = () => {
     }
   };
 
+  const alterarSenha = async (values: any) => {
+    setLoading(true);
+    const { error } = await supabase.auth.resetPasswordForEmail(values.email);
+    setLoading(false);
+    if (error) {
+      window.alert(`Erro: ${error.message}`);
+      setLoading(false);
+    } else {
+      window.alert("Email enviado com sucesso!");
+      setLoading(false);
+    }
+  };
+
   return (
     <Box m="20px">
       <Header
@@ -165,6 +180,7 @@ const CadastrarUsuario = () => {
             />
             <TextField
               fullWidth
+              disabled={state}
               variant="filled"
               type="text"
               label="Email"
@@ -249,7 +265,7 @@ const CadastrarUsuario = () => {
 
       {state && (
         <TabPanel value={tab} index={1}>
-          <form onSubmit={handleSubmit(state ? editar : salvar)}>
+          <form onSubmit={handleSubmit(alterarSenha)}>
             <Box
               display="grid"
               gap="30px"
@@ -260,61 +276,54 @@ const CadastrarUsuario = () => {
                 },
               }}
             >
+              <Typography
+                color="#ADADAD"
+                fontSize={16}
+                sx={{ gridColumn: "span 4" }}
+              >
+                Será enviado um e-mail ao usuário com as instruções para que o
+                mesmo possa realizar a alteração de senha.
+              </Typography>
+
               <TextField
                 fullWidth
                 variant="filled"
-                type={showPassword ? "text" : "password"}
-                label="Senha"
-                {...register("senha", {
-                  required: !state ? true : false,
+                disabled={state}
+                type="text"
+                label="Nome"
+                {...register("nome", {
+                  required: true,
                 })}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={() => {
-                          setshowPassword(!showPassword);
-                        }}
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-                error={!!errors.senha}
-                helperText={errors.senha ? "Senha é obrigatória" : ""}
+                error={!!errors.nome}
+                helperText={errors.nome ? "Nome é obrigatório" : ""}
                 sx={{ gridColumn: "span 2" }}
               />
 
               <TextField
                 fullWidth
                 variant="filled"
-                type={showPassword ? "text" : "password"}
-                label="Confirmar Senha"
-                {...register("confirm_senha", {
-                  required: !state ? true : false,
+                type="text"
+                disabled={state}
+                label="Telefone"
+                {...register("telefone", {
+                  required: true,
                 })}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={() => {
-                          setshowPassword(!showPassword);
-                        }}
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-                error={!!errors.confirm_senha}
-                helperText={
-                  errors.confirm_senha
-                    ? "Confirmação de Senha é obrigatória"
-                    : ""
-                }
+                onBlur={maskTel}
+                error={!!errors.telefone}
+                helperText={errors.telefone ? "Telefone é obrigatório" : ""}
+                sx={{ gridColumn: "span 2" }}
+              />
+              <TextField
+                fullWidth
+                disabled={state}
+                variant="filled"
+                type="text"
+                label="Email"
+                {...register("email", {
+                  required: true,
+                })}
+                error={!!errors.email}
+                helperText={errors.email ? "Email é obrigatório" : ""}
                 sx={{ gridColumn: "span 2" }}
               />
             </Box>
@@ -329,7 +338,7 @@ const CadastrarUsuario = () => {
                 {loading ? (
                   <CircularProgress size={24} sx={{ color: "white" }} />
                 ) : (
-                  "Salvar"
+                  "Enviar"
                 )}
               </Button>
             </Box>

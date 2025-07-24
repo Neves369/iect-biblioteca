@@ -30,7 +30,7 @@ const EnviarEmailRecuperarAcesso: React.FC = () => {
     if (error) {
       setMessage(`Erro: ${error.message}`);
     } else {
-      setMessage("Email enviadocom sucesso!");
+      setMessage("Email enviado com sucesso!");
       setTimeout(() => {
         window.location.reload();
       }, 4000);
